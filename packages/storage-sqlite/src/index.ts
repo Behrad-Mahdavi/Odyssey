@@ -1,1 +1,11 @@
-export const STORAGE_SQLITE_VERSION = "1.0.0";
+export * from "./driver/sql-driver.interface.js";
+export * from "./driver/better-sqlite.driver.js";
+export * from "./schema/tables.js";
+export * from "./fts/fts-normalizer.js";
+export * from "./fts/fts5-setup.js";
+export * from "./migrations/migration-runner.js";
+export * from "./migrations/0001_initial_schema.js";
+export * from "./repositories/design-cycle.repository.js";
+export * from "./repositories/fts-search.repository.js";
+export * from "./worker/protocol.js";
+export * from "./worker/worker-storage.client.js";

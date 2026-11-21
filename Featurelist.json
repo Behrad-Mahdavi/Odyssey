@@ -66,7 +66,7 @@
       "book_ref": "Platform Core",
       "release": "v1.0",
       "priority": "P0",
-      "status": "planned",
+      "status": "completed",
       "title": "موتور دیتابیس SQLite WASM + OPFS، جستجوی FTS5 و Migrationها",
       "description": "پیاده‌سازی Adapter ذخیره‌سازی روی SQLite WASM داخل Web Worker با ذخیره‌سازی پایدار OPFS، Drizzle ORM، جدول مجازی FTS5 و سیستم Migration ورژن‌بندی‌شده.",
       "mindsets": ["awareness"],

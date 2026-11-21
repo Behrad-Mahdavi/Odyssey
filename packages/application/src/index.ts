@@ -1,2 +1,7 @@
+export * from "./errors/storage-error.js";
 export * from "./ports/storage.port.js";
 export * from "./ports/crypto.port.js";
+export * from "./ports/storage-lifecycle.port.js";
+export * from "./ports/search.port.js";
+export * from "./ports/design-cycle.repository.port.js";
+export * from "./ports/unit-of-work.port.js";

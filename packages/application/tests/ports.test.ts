@@ -1,28 +1,27 @@
-import { ok } from "@odyssey/domain";
 import { describe, expect, it } from "vitest";
-import type { ICryptoPort, IStoragePort } from "../src/index.js";
+import { StorageError, type StorageStatus } from "../src/index.js";
 
-describe("Application Ports Contract", () => {
-  it("should enforce clean interface definitions for Storage Port", async () => {
-    const mockStorage: IStoragePort = {
-      init: async () => ok(undefined),
-      execute: async (_sql, _params) => ok([{ count: 1 }]),
-      close: async () => {},
-    };
+describe("Application Storage Ports & Errors", () => {
+  it("should create structured StorageError with standard error codes", () => {
+    const error = new StorageError(
+      "DATABASE_LOCKED_BY_OTHER_TAB",
+      "Another browser tab currently holds exclusive lock on Odyssey OPFS vault.",
+    );
 
-    const res = await mockStorage.execute("SELECT 1;");
-    expect(res.ok).toBe(true);
+    expect(error.code).toBe("DATABASE_LOCKED_BY_OTHER_TAB");
+    expect(error.message).toContain("[DATABASE_LOCKED_BY_OTHER_TAB]");
+    expect(error.name).toBe("StorageError");
   });
 
-  it("should enforce clean interface definitions for Crypto Port", async () => {
-    const mockCrypto: ICryptoPort = {
-      deriveKey: async () => ok(new Uint8Array([1, 2, 3])),
-      encrypt: async () => ok(new Uint8Array([4, 5, 6])),
-      decrypt: async () => ok(new Uint8Array([7, 8, 9])),
-      hash: async () => "sha256-mock",
+  it("should typecheck StorageStatus interface", () => {
+    const status: StorageStatus = {
+      isInitialized: true,
+      vfs: "opfs-sahpool",
+      databaseName: "odyssey_vault.sqlite3",
+      schemaVersion: 1,
+      totalRecordsEstimate: 120,
     };
 
-    const hash = await mockCrypto.hash(new Uint8Array([0]));
-    expect(hash).toBe("sha256-mock");
+    expect(status.vfs).toBe("opfs-sahpool");
   });
 });

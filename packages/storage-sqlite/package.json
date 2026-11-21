@@ -18,9 +18,13 @@
   },
   "dependencies": {
     "@odyssey/application": "workspace:*",
-    "@odyssey/domain": "workspace:*"
+    "@odyssey/domain": "workspace:*",
+    "@sqlite.org/sqlite-wasm": "3.54.1-build1",
+    "drizzle-orm": "^0.45.4"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "better-sqlite3": "^13.2.0",
     "typescript": "^5.7.3",
     "vitest": "^3.0.7"
   }
