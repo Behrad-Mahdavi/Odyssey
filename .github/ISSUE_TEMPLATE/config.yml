@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security Vulnerability Advisory
+    url: https://github.com/Behrad-Mahdavi/Odyssey/security/advisories/new
+    about: Privately disclose security vulnerabilities or zero-knowledge vault concerns.

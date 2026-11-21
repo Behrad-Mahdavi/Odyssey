@@ -1,0 +1,25 @@
+{
+  "description": "Persian & Arabic typography edge cases for domain validation and text processing",
+  "samples": [
+    {
+      "text": "طراحی مسیر شغلی و زندگی نو",
+      "expectedWords": 6,
+      "description": "Six-word Persian title with standard spacing"
+    },
+    {
+      "text": "من به دانشگاه می‌روم و کتاب‌ها را می‌خوانم",
+      "expectedWords": 7,
+      "description": "Words with ZWNJ (نیم‌فاصله) within prefixes and plural suffixes"
+    },
+    {
+      "text": "سلام! آیا این یک آزمایش است؟",
+      "expectedWords": 6,
+      "description": "Persian punctuation marks (! و ؟)"
+    },
+    {
+      "text": "   فاصله‌های    اضافی   و   خطوط\nجدید   ",
+      "expectedWords": 4,
+      "description": "Irregular whitespaces and newlines"
+    }
+  ]
+}

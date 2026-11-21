@@ -1,0 +1,36 @@
+name: "Feature Request"
+description: "Suggest an idea or improvement connected to Life Design methodology"
+title: "[Feature]: "
+labels: ["enhancement", "design-thinking"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Propose a feature or enhancement aligned with **Odyssey's Local-First & Life Design** principles.
+  - type: dropdown
+    id: chapter_mindset
+    attributes:
+      label: "Related Book Chapter / Mindset"
+      description: "Which part of the methodology does this support?"
+      options:
+        - "Backbone: Five Mindsets (Curiosity, Action, Reframe, Awareness, Collaboration)"
+        - "Chapter 1: Start Where You Are (HWPL & Gravity Problems)"
+        - "Chapter 2: Building a Compass (Workview & Lifeview)"
+        - "Chapter 3: Wayfinding (Good Time Journal & AEIOU)"
+        - "Chapter 4: Getting Unstuck (Reframe Studio & Mind Mapping)"
+        - "Chapter 5: Designing Your Lives (Odyssey Plans)"
+        - "Chapter 6: Prototyping Lab (Conversations & Experiences)"
+        - "Chapter 7 & 8: Career Navigation & Hidden Market"
+        - "Chapter 9: Choosing Happiness (Decision Room)"
+        - "Chapter 10: Failure Immunity (3-Bucket Reframe)"
+        - "Chapter 11: Building a Team & Community"
+        - "Core Infrastructure (Storage, Zero-Knowledge Crypto, Portability)"
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "Feature Description & User Value"
+      description: "What should this feature do and how does it empower the user?"
+    validations:
+      required: true

@@ -1,0 +1,12 @@
+{
+  "name": "@odyssey/sync-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'Sync server build placeholder (Phase 3 Self-hosted relay)'",
+    "typecheck": "echo 'Sync server typecheck placeholder'",
+    "test:unit": "echo 'Sync server test placeholder'",
+    "test": "echo 'Sync server test placeholder'"
+  }
+}

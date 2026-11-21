@@ -1,0 +1,12 @@
+{
+  "name": "@odyssey/desktop",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'Desktop build placeholder (Phase 2 Tauri v2)'",
+    "typecheck": "echo 'Desktop typecheck placeholder'",
+    "test:unit": "echo 'Desktop test placeholder'",
+    "test": "echo 'Desktop test placeholder'"
+  }
+}

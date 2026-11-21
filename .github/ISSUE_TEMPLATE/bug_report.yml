@@ -1,0 +1,47 @@
+name: "Bug Report"
+description: "Report a bug or reproducible malfunction in Odyssey"
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue in **Odyssey**.
+        Please ensure you do NOT include sensitive personal data (Workview, Lifeview, or Passphrase).
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description of the Bug"
+      description: "A clear and concise description of what went wrong."
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: "Runtime Environment"
+      description: "Where did this issue occur?"
+      options:
+        - "Web PWA (Chromium - OPFS)"
+        - "Web PWA (Firefox - OPFS)"
+        - "Web PWA (Safari - OPFS)"
+        - "Desktop Native (Tauri v2 - macOS)"
+        - "Desktop Native (Tauri v2 - Windows)"
+        - "Desktop Native (Tauri v2 - Linux)"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Steps to Reproduce"
+      description: "Detailed step-by-step instructions to reproduce the problem."
+      placeholder: |
+        1. Open Odyssey Vault
+        2. Navigate to Good Time Journal (Ch. 3)
+        3. Attempt to save an entry with bipolar energy
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostic_dump
+    attributes:
+      label: "Sanitized Diagnostic Log (Optional)"
+      description: "Copy logs from Local Diagnostic Buffer if available (confirm no personal thoughts are included)."

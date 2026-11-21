@@ -8,14 +8,28 @@
     "typecheck": "turbo run typecheck",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
+    "lint:staged": "lint-staged",
     "format": "biome format --write .",
     "dep:check": "depcruise --config .dependency-cruiser.cjs packages apps",
+    "audit:telemetry": "node scripts/audit-zero-telemetry.mjs",
+    "audit:css": "node scripts/audit-logical-css.mjs",
+    "audit:i18n": "node scripts/audit-i18n-parity.mjs",
     "test:unit": "turbo run test:unit",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx,json}": ["biome check --write --no-errors-on-unmatched"],
+    "*.{ts,tsx}": ["node scripts/audit-logical-css.mjs"]
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@changesets/cli": "^2.27.12",
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
     "dependency-cruiser": "^16.10.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
     "turbo": "^2.4.4",
     "typescript": "^5.7.3",
     "vitest": "^3.0.7"

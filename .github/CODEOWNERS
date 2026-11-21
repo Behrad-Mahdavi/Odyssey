@@ -1,0 +1,15 @@
+# Codeowners for Odyssey Architecture Governance
+* @Behrad-Mahdavi
+
+# Strict Core Domains & Security
+/packages/domain/       @Behrad-Mahdavi
+/packages/crypto/       @Behrad-Mahdavi
+/packages/application/  @Behrad-Mahdavi
+
+# Architectural Governance & Mechanical Guardrails
+/.github/               @Behrad-Mahdavi
+/.dependency-cruiser.cjs @Behrad-Mahdavi
+/AGENT.md               @Behrad-Mahdavi
+/SRD.md                 @Behrad-Mahdavi
+/Brief.md               @Behrad-Mahdavi
+/Featurelist.json       @Behrad-Mahdavi
