@@ -1,0 +1,442 @@
+{
+  "schema_version": "1.0.0",
+  "project": {
+    "name": "Odyssey",
+    "codename": "odyssey",
+    "architecture": "Monorepo / Hexagonal DDD / Local-First / Zero-Knowledge",
+    "languages": ["fa-IR", "en-US"],
+    "methodology_source": "Life Design Methodology (Introduction + 5 Mindsets Backbone + 11 Chapters + Conclusion)"
+  },
+  "mindsets_backbone": [
+    {
+      "id": "curiosity",
+      "en": "Curiosity",
+      "fa": "کنجکاوی"
+    },
+    {
+      "id": "bias_to_action",
+      "en": "Bias to Action",
+      "fa": "تمایل به اقدام"
+    },
+    {
+      "id": "reframing",
+      "en": "Reframing",
+      "fa": "بازچارچوب‌بندی"
+    },
+    {
+      "id": "awareness",
+      "en": "Awareness",
+      "fa": "آگاهی"
+    },
+    {
+      "id": "radical_collaboration",
+      "en": "Radical Collaboration",
+      "fa": "همکاری رادیکال"
+    }
+  ],
+  "features": [
+    {
+      "id": "F-001",
+      "module": "foundation",
+      "book_ref": "Platform Core",
+      "release": "v1.0",
+      "priority": "P0",
+      "status": "completed",
+      "title": "زیرساخت Monorepo، مرزبندی Hexagonal و ابزارهای کیفیت",
+      "description": "راه‌اندازی pnpm + Turborepo، تعریف پکیج‌های domain/application/storage-sqlite/crypto/ui، تنظیم Biome، TypeScript Strict و قوانین dependency-cruiser.",
+      "mindsets": ["awareness"],
+      "dependencies": [],
+      "domain_invariants": [],
+      "packages_touched": [
+        "@odyssey/domain",
+        "@odyssey/application",
+        "@odyssey/ui",
+        "@odyssey/web"
+      ],
+      "acceptance_criteria": [
+        "پکیج @odyssey/domain هیچ ایمپورتی از React، مرورگر یا لایه دیتابیس ندارد و dependency-cruiser در CI آن را تأیید می‌کند.",
+        "دستورهای pnpm typecheck، pnpm lint و pnpm test روی کل ورک‌اسپیس بدون خطا اجرا می‌شوند.",
+        "تنظیمات noUncheckedIndexedAccess و exactOptionalPropertyTypes در کل ریپو فعال است."
+      ],
+      "test_requirements": ["ci-boundary-check", "typecheck"]
+    },
+    {
+      "id": "F-002",
+      "module": "storage",
+      "book_ref": "Platform Core",
+      "release": "v1.0",
+      "priority": "P0",
+      "status": "planned",
+      "title": "موتور دیتابیس SQLite WASM + OPFS، جستجوی FTS5 و Migrationها",
+      "description": "پیاده‌سازی Adapter ذخیره‌سازی روی SQLite WASM داخل Web Worker با ذخیره‌سازی پایدار OPFS، Drizzle ORM، جدول مجازی FTS5 و سیستم Migration ورژن‌بندی‌شده.",
+      "mindsets": ["awareness"],
+      "dependencies": ["F-001"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/storage-sqlite", "@odyssey/application"],
+      "acceptance_criteria": [
+        "تمام کوئری‌های SQLite خارج از Main Thread در Dedicated Web Worker اجرا می‌شوند.",
+        "دیتا پس از ریفرش صفحه و در حالت کاملاً آفلاین در OPFS حفظ می‌شود.",
+        "جستجوی FTS5 روی متن‌های فارسی و انگلیسی در کمتر از 30ms نتیجه می‌دهد.",
+        "سیستم Migration قابلیت ارتقای قطعی بین نسخه‌های اسکیما را با تست خودکار دارد."
+      ],
+      "test_requirements": ["vitest-migrations", "playwright-opfs-offline"]
+    },
+    {
+      "id": "F-003",
+      "module": "security",
+      "book_ref": "Platform Core",
+      "release": "v1.0",
+      "priority": "P0",
+      "status": "planned",
+      "title": "گاوصندوق Zero-Knowledge (AES-256-GCM + Argon2id)",
+      "description": "پیاده‌سازی لایه رمزنگاری کلاینت‌ساید با Argon2id برای مشتق‌سازی کلید، رمزنگاری AES-256-GCM، قفل خودکار بر اساس بیکاری و بسته‌های بکاپ امضاشده با SHA-256.",
+      "mindsets": ["awareness"],
+      "dependencies": ["F-002"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/crypto", "@odyssey/application", "@odyssey/ui"],
+      "acceptance_criteria": [
+        "Passphrase کاربر هرگز روی دیسک ذخیره نمی‌شود و عملیات Argon2id در Web Worker انجام می‌گیرد.",
+        "تغییر Passphrase بدون نیاز به رمزنگاری مجدد کل دیتابیس (از طریق ساختار KEK/DEK) انجام می‌شود.",
+        "با فعال شدن Auto-Lock، کلیدهای حافظه پاک شده و UI فوراً به صفحه قفل منتقل می‌شود."
+      ],
+      "test_requirements": ["vitest-crypto-vectors", "playwright-vault-lock"]
+    },
+    {
+      "id": "F-004",
+      "module": "design-system",
+      "book_ref": "Platform Core",
+      "release": "v1.0",
+      "priority": "P0",
+      "status": "planned",
+      "title": "دیزاین‌سیستم دوزبانه (RTL/LTR)، فونت محلی و PWA",
+      "description": "راه‌اندازی packages/ui با Radix + Tailwind v4 Logical CSS، فونت‌های Self-Hosted (Vazirmatn و Inter)، react-i18next، تقویم شمسی/میلادی و تنظیمات PWA آفلاین.",
+      "mindsets": ["awareness"],
+      "dependencies": ["F-001"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/ui", "@odyssey/web"],
+      "acceptance_criteria": [
+        "تغییر زبان بین فارسی (RTL) و انگلیسی (LTR) بدون شکستگی چیدمان و بدون استفاده از کلاس‌های فیزیکی ml/mr انجام می‌شود.",
+        "در تب Network مرورگر صفر درخواست به CDN خارجی یا سرویس تله‌متری وجود دارد.",
+        "اپلیکیشن به عنوان PWA قابل نصب است و پس از قطع کامل شبکه به صورت کامل کار می‌کند."
+      ],
+      "test_requirements": ["storybook-a11y", "playwright-rtl-ltr-visual"]
+    },
+    {
+      "id": "F-005",
+      "module": "onboarding",
+      "book_ref": "Introduction & 5 Mindsets",
+      "release": "v1.0",
+      "priority": "P1",
+      "status": "planned",
+      "title": "Onboarding فلسفی و سیستم زنده ۵ ذهنیت طراحی",
+      "description": "جریان معرفی اولیه تفکر طراحی، شکستن افسانه «اول علاقه»، معرفی ۵ ذهنیت طراح و زیرساخت راهنماهای بافتی ۵ ذهنیت در تمام ماژول‌ها.",
+      "mindsets": ["curiosity", "bias_to_action", "reframing", "awareness", "radical_collaboration"],
+      "dependencies": ["F-004"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/domain", "@odyssey/ui", "@odyssey/web"],
+      "acceptance_criteria": [
+        "کاربر جدید در کمتر از ۲ دقیقه با ۵ ذهنیت و جریان ابزارها آشنا شده و اولین چرخه طراحی (Cycle 1) برایش ساخته می‌شود.",
+        "متون Onboarding با ادبیات مستقل نوشته شده و فاقد کپی کلمه‌به‌کلمه متن کتاب هستند.",
+        "کارت‌های یادآور بافتی ۵ ذهنیت در ماژول‌های مرتبط قابل مشاهده و قابل بستن هستند."
+      ],
+      "test_requirements": ["playwright-onboarding-flow"]
+    },
+    {
+      "id": "F-006",
+      "module": "hwpl",
+      "book_ref": "Chapter 1: Start Where You Are",
+      "release": "v1.0",
+      "priority": "P0",
+      "status": "planned",
+      "title": "داشبورد HWPL و فیلتر مسائل گرانشی (Gravity Problems)",
+      "description": "چهار درجه‌سنج تعاملی Health، Work، Play و Love با ثبت تاریخچه + برد تفکیک مسائل به دو دسته Gravity (واقعیت پذیرفته‌شده) و Designable (قابل طراحی).",
+      "mindsets": ["awareness", "reframing"],
+      "dependencies": ["F-002", "F-004", "F-005"],
+      "domain_invariants": ["INV-01"],
+      "packages_touched": ["@odyssey/domain", "@odyssey/application", "@odyssey/storage-sqlite", "@odyssey/web"],
+      "acceptance_criteria": [
+        "کاربر می‌تواند مقدار هر ۴ گیج را با کیبورد و ماوس تنظیم کرده و توضیح متنی وضعیت را ذخیره کند.",
+        "مسائل با برچسب GRAVITY به بخش «واقعیت‌های پذیرفته‌شده» منتقل شده و از لیست مسائل قابل طراحی جدا می‌شوند.",
+        "مسائل DESIGNABLE به عنوان ورودی در کارگاه فصل ۴ قابل دسترسی هستند."
+      ],
+      "test_requirements": ["vitest-domain-hwpl", "playwright-hwpl-gravity"]
+    },
+    {
+      "id": "F-007",
+      "module": "compass",
+      "book_ref": "Chapter 2: Building a Compass",
+      "release": "v1.0",
+      "priority": "P0",
+      "status": "planned",
+      "title": "استودیوی قطب‌نما (Workview / Lifeview و ماتریس Coherence)",
+      "description": "ادیتور دوتایی برای نوشتن دیدگاه کار و دیدگاه زندگی با شمارشگر راهنمای ~250 کلمه و ابزار تحلیل همراستایی (همپوشانی، تضاد و جهت هدایت).",
+      "mindsets": ["awareness"],
+      "dependencies": ["F-002", "F-004"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/domain", "@odyssey/application", "@odyssey/storage-sqlite", "@odyssey/web"],
+      "acceptance_criteria": [
+        "هر دو متن Workview و Lifeview به صورت کنارهم (در دسکتاپ) قابل نوشتن و مقایسه هستند.",
+        "شمارشگر کلمات با نیم‌فاصله فارسی سازگار است و به صورت غیرمسدودکننده هدف ~250 کلمه را نشان می‌دهد.",
+        "خلاصه قطب‌نما هنگام امتیازدهی به گیج Coherence در فصل ۵ به صورت پنل مرجع در دسترس است."
+      ],
+      "test_requirements": ["vitest-word-counter", "playwright-compass"]
+    },
+    {
+      "id": "F-008",
+      "module": "journal",
+      "book_ref": "Chapter 3: Wayfinding",
+      "release": "v1.0",
+      "priority": "P0",
+      "status": "planned",
+      "title": "ژورنال زمان‌های خوب ۳ مرحله‌ای (لاگ روزانه ← مرور و غافلگیری‌ها ← AEIOU)",
+      "description": "ثبت سریع فعالیت‌ها با دو شاخص Engagement (و Flow) و Energy، ویزارد مرور هفتگی با نمودار دو‌بعدی و تگ‌گذاری Trend/Insight/Surprise، و اجرای فرم AEIOU روی یافته‌های مرحله مرور.",
+      "mindsets": ["curiosity", "awareness"],
+      "dependencies": ["F-002", "F-004"],
+      "domain_invariants": ["INV-01", "INV-04"],
+      "packages_touched": ["@odyssey/domain", "@odyssey/application", "@odyssey/storage-sqlite", "@odyssey/web"],
+      "acceptance_criteria": [
+        "ثبت یک فعالیت روزانه در کمتر از ۱۰ ثانیه و با Auto-Save انجام می‌شود.",
+        "در گام مرور هفتگی، نمودار Scatter Plot تمام فعالیت‌ها را روی دو محور Engagement و Energy نمایش می‌دهد.",
+        "کاربر می‌تواند روی نقاط نمودار تگ TREND، INSIGHT یا SURPRISE بزند.",
+        "فرم AEIOU (با ۵ فیلد کامل) مستقیماً از روی یافته‌ها و اوج‌های مرحله مرور باز و متصل ذخیره می‌شود."
+      ],
+      "test_requirements": ["vitest-wayfinding-machine", "playwright-gtj-pipeline"]
+    },
+    {
+      "id": "F-009",
+      "module": "odyssey",
+      "book_ref": "Chapter 5: Design Your Lives",
+      "release": "v1.0",
+      "priority": "P0",
+      "status": "planned",
+      "title": "سازنده برنامه‌های ادیسه (۳ مسیر ۵ ساله + Pitch/Print PDF + بازخورد)",
+      "description": "بوم سه‌ستونه برای طراحی همزمان Life 1، Life 2 و Life 3 با تایم‌لاین ۵ ساله، عنوان ۶ کلمه‌ای، ۳ سؤال کلیدی، ۴ گیج دقیق (Resources, Likability, Confidence, Coherence)، خروجی چاپی Vector PDF و لاگ بازخورد ارائه.",
+      "mindsets": ["curiosity", "radical_collaboration", "bias_to_action"],
+      "dependencies": ["F-007", "F-008"],
+      "domain_invariants": ["INV-01", "INV-02", "INV-03"],
+      "packages_touched": ["@odyssey/domain", "@odyssey/application", "@odyssey/storage-sqlite", "@odyssey/web"],
+      "acceptance_criteria": [
+        "هر سه مسیر به صورت موازی روی یک صفحه قابل مشاهده و ویرایش هستند و رویدادهای کاری و غیرکاری تفکیک می‌شوند.",
+        "برچسب دقیق گیج‌ها شامل Resources، Likability، Confidence و Coherence است.",
+        "تعداد سؤالات کلیدی هر مسیر روی ۳ اسلات استاندارد شده و شمارشگر عنوان ۶ کلمه‌ای فعال است.",
+        "حالت Pitch/Print Mode یک خروجی Vector PDF یک‌صفحه‌ای تمیز (با فونت فارسی بدون شکستگی) از هر ۳ مسیر تولید می‌کند.",
+        "بخش بازخورد ارائه شامل دو فیلد مجزا برای بازخورد دیگران و حس/انرژی درونی خود کاربر حین ارائه است."
+      ],
+      "test_requirements": ["vitest-odyssey-invariants", "playwright-odyssey-print"]
+    },
+    {
+      "id": "F-010",
+      "module": "prototype",
+      "book_ref": "Chapter 6: Prototyping",
+      "release": "v1.0",
+      "priority": "P0",
+      "status": "planned",
+      "title": "آزمایشگاه پروتوتایپ (مکالمات داستان‌محور، تجربه‌ها و طوفان فکری)",
+      "description": "تبدیل مستقیم هر یک از ۳ سؤال ادیسه به کارت‌های Prototype Conversation و Prototype Experience به همراه بوم طوفان فکری ساختاریافته.",
+      "mindsets": ["bias_to_action", "curiosity", "radical_collaboration"],
+      "dependencies": ["F-009"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/domain", "@odyssey/application", "@odyssey/storage-sqlite", "@odyssey/web"],
+      "acceptance_criteria": [
+        "روی هر سؤال کلیدی در کارت ادیسه، دکمه ساخت مستقیم پروتوتایپ وجود دارد و پیوند دوطرفه حفظ می‌شود.",
+        "کارت مکالمه شامل تمپلیت مصاحبه داستان‌محور و یادآور غیرشغلی بودن گفت‌وگو است.",
+        "کارت تجربه شامل فرضیه، هزینه، نتیجه واقعی و نتیجه‌گیری برای ادامه یا تغییر مسیر است."
+      ],
+      "test_requirements": ["vitest-prototype-usecases", "playwright-prototype-board"]
+    },
+    {
+      "id": "F-011",
+      "module": "portability",
+      "book_ref": "Platform Core",
+      "release": "v1.0",
+      "priority": "P0",
+      "status": "planned",
+      "title": "خروجی و ورودی کامل (Encrypted Bundle، JSON و Markdown/Obsidian)",
+      "description": "پشتیبانی از Export/Import تک‌کلیکی فایل‌های بکاپ رمزنگاری‌شده با Checksum، بکاپ JSON با اعتبارسنجی Zod و خروجی ساختاری Markdown برای ابزارهای PKM.",
+      "mindsets": ["awareness"],
+      "dependencies": ["F-002", "F-003", "F-009", "F-010"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/crypto", "@odyssey/application", "@odyssey/storage-sqlite", "@odyssey/web"],
+      "acceptance_criteria": [
+        "بازگردانی (Import) یک فایل بکاپ روی مرورگر خالی، ۱۰۰٪ دیتای تمام ماژول‌ها را بدون افت بازیابی می‌کند.",
+        "فایل‌های خراب یا دستکاری‌شده توسط SHA-256 و Zod شناسایی شده و بدون آسیب به دیتای فعلی رد می‌شوند.",
+        "خروجی Markdown شامل Frontmatter استاندارد و لینک‌های داخلی معتبر است."
+      ],
+      "test_requirements": ["vitest-backup-roundtrip", "playwright-import-export"]
+    },
+    {
+      "id": "F-012",
+      "module": "ideate",
+      "book_ref": "Chapter 4: Getting Unstuck",
+      "release": "v2.0",
+      "priority": "P1",
+      "status": "planned",
+      "title": "کارگاه بازچارچوب‌بندی (Reframe Studio) و بوم Mind Map سه‌گانه با Mash-up",
+      "description": "ابزار اصلی خروج از بن‌بست برای تبدیل مسائل لنگرشده به سؤالات باز + ۳ نقشه ذهنی کیبورد-محور با تایمر ۳ تا ۵ دقیقه متصل به اوج‌های فصل ۳ + حالت Mash-up روی حلقه بیرونی.",
+      "mindsets": ["reframing", "curiosity", "bias_to_action"],
+      "dependencies": ["F-006", "F-008", "F-009"],
+      "domain_invariants": ["INV-05"],
+      "packages_touched": ["@odyssey/domain", "@odyssey/application", "@odyssey/sync-engine", "@odyssey/web"],
+      "acceptance_criteria": [
+        "کارگاه Reframe پیش از ورود به Mind Map در دسترس بوده و مسائل Designable فصل ۱ را می‌خواند.",
+        "کاربر می‌تواند فقط با کلیدهای Tab و Enter در مدت تایمر ۳ تا ۵ دقیقه نقشه ذهنی بکشد و Undo/Redo کامل دارد.",
+        "در حالت Mash-up، تنها گره‌های برگ (Outer Ring) قابل انتخاب هستند و با انتخاب دقیقاً ۳ گره، یک ConceptCard آماده ارسال به فصل ۵ ساخته می‌شود."
+      ],
+      "test_requirements": ["vitest-ideation-machine", "playwright-mindmap-keyboard"]
+    },
+    {
+      "id": "F-013",
+      "module": "cycles",
+      "book_ref": "Conclusion: A Well-Designed Life",
+      "release": "v2.0",
+      "priority": "P1",
+      "status": "planned",
+      "title": "مدیریت چرخه‌های طراحی، اسنپ‌شات‌ها و مقایسه تاریخی",
+      "description": "امکان ایجاد چرخه‌های جدید طراحی زندگی در طول ماه‌ها و سال‌ها و مقایسه بصری تغییر گیج‌های HWPL، قطب‌نما و ادیسه‌ها بین چرخه‌ها.",
+      "mindsets": ["awareness"],
+      "dependencies": ["F-006", "F-007", "F-009"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/domain", "@odyssey/application", "@odyssey/storage-sqlite", "@odyssey/web"],
+      "acceptance_criteria": [
+        "اسنپ‌شات‌های بسته‌شده به صورت Read-Only باقی می‌مانند و در هر زمان قابل مشاهده هستند.",
+        "نمودار مقایسه‌ای تغییرات ۴ گیج HWPL را در طول چرخه‌های مختلف نمایش می‌دهد."
+      ],
+      "test_requirements": ["vitest-cycle-snapshots", "playwright-cycle-diff"]
+    },
+    {
+      "id": "F-014",
+      "module": "desktop",
+      "book_ref": "Platform Core",
+      "release": "v2.0",
+      "priority": "P1",
+      "status": "planned",
+      "title": "اپلیکیشن نیتیو دسکتاپ (Tauri v2) با SQLite نیتیو و OS Keychain",
+      "description": "بسته‌بندی کلاینت روی Tauri v2 برای macOS، Windows و Linux با اتصال مستقیم به SQLite نیتیو، ذخیره امن کلید در Keychain سیستم‌عامل و دسترسی مستقیم به فایل‌سیستم.",
+      "mindsets": ["awareness"],
+      "dependencies": ["F-002", "F-003", "F-011"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/desktop", "@odyssey/storage-sqlite", "@odyssey/crypto"],
+      "acceptance_criteria": [
+        "بیلدهای نیتیو macOS و Windows/Linux با همان کدبیس UI و Domain اجرا می‌شوند.",
+        "باز کردن خودکار Vault با احراز هویت سیستم‌عامل (مثل Touch ID روی macOS) به صورت اختیاری پشتیبانی می‌شود."
+      ],
+      "test_requirements": ["tauri-integration-tests"]
+    },
+    {
+      "id": "F-015",
+      "module": "career-network",
+      "book_ref": "Chapters 7 & 8: Career Navigation & Dream Job",
+      "release": "v3.0",
+      "priority": "P1",
+      "status": "planned",
+      "title": "تحلیلگر واژگان آگهی، گراف شبکه معرفی‌ها و ردیاب پیشنهادها",
+      "description": "تبدیل مکالمات فصل ۶ به گراف شبکه معرفی‌ها (Who else?)، ابزار نگاشت کلیدواژه‌های آگهی به مسئله مدیر استخدام، و برد پیگیری پیشنهادهای متعدد (Pursuing Offers).",
+      "mindsets": ["bias_to_action", "radical_collaboration", "reframing"],
+      "dependencies": ["F-010"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/domain", "@odyssey/application", "@odyssey/storage-sqlite", "@odyssey/web"],
+      "acceptance_criteria": [
+        "ثبت معرف جدید در پایان هر مکالمه پروتوتایپ، به صورت خودکار یال جدیدی در گراف شبکه می‌سازد.",
+        "ابزار تحلیل آگهی کلیدواژه‌های کلیدی را استخراج کرده و چک‌لیست تطبیق با مسئله مدیر استخدام را ارائه می‌دهد.",
+        "پیشنهادهای ثبت‌شده قابل انتقال مستقیم به اتاق تصمیم‌گیری فصل ۹ هستند."
+      ],
+      "test_requirements": ["vitest-network-graph", "playwright-offers"]
+    },
+    {
+      "id": "F-016",
+      "module": "decide",
+      "book_ref": "Chapter 9: Choosing Happiness",
+      "release": "v3.0",
+      "priority": "P1",
+      "status": "planned",
+      "title": "اتاق تصمیم‌گیری ۴ مرحله‌ای (قفل حداکثر ۵ گزینه + Grokking + Commit & Let Go)",
+      "description": "پیاده‌سازی ماشین وضعیت ۴ گام انتخاب خوب شامل محدودیت سخت‌گیرانه حداکثر ۵ گزینه، ژورنال حس درونی و بدنی Grokking برای «پوشیدن گزینه» و قفل تعهد و رهاسازی مابقی گزینه‌ها.",
+      "mindsets": ["awareness", "bias_to_action"],
+      "dependencies": ["F-009", "F-015"],
+      "domain_invariants": ["INV-06", "INV-07"],
+      "packages_touched": ["@odyssey/domain", "@odyssey/application", "@odyssey/storage-sqlite", "@odyssey/web"],
+      "acceptance_criteria": [
+        "تا زمانی که تعداد گزینه‌های فعال بیش از ۵ عدد باشد، سیستم اجازه ورود به مرحله Grokking را نمی‌دهد.",
+        "در مرحله Grokking، کاربر می‌تواند طی چند روز واکنش‌های شهودی، عاطفی و بدنی هر گزینه را ثبت کند.",
+        "پس از زدن دکمه Commit & Let Go، گزینه‌های رهاشده به حالت آرشیو غیرقابل ویرایش می‌روند."
+      ],
+      "test_requirements": ["vitest-decision-invariants", "playwright-decision-room"]
+    },
+    {
+      "id": "F-017",
+      "module": "failure-immunity",
+      "book_ref": "Chapter 10: Failure Immunity",
+      "release": "v3.0",
+      "priority": "P1",
+      "status": "planned",
+      "title": "گزارش دوره‌ای شکست و تفکیک ۳ سطل (Screwup / Weakness / Growth)",
+      "description": "لاگر دوره‌ای با یادآور قابل تنظیم و درگ-اند-دراپ شکست‌ها در ۳ سطل مجزا با گردش‌کار اختصاصی هر سطل و استخراج Growth Insight.",
+      "mindsets": ["reframing", "awareness"],
+      "dependencies": ["F-002", "F-004"],
+      "domain_invariants": ["INV-08"],
+      "packages_touched": ["@odyssey/domain", "@odyssey/application", "@odyssey/storage-sqlite", "@odyssey/web"],
+      "acceptance_criteria": [
+        "بازه یادآوری گزارش شکست توسط کاربر قابل تنظیم است (پیش‌فرض ماهانه).",
+        "سطل Screwup جریان آرشیو سریع دارد، Weakness فیلد اصلاح سیستم/محیط باز می‌کند و Growth Opportunity بدون تکمیل ۲ سؤال بینش رشد بسته نمی‌شود."
+      ],
+      "test_requirements": ["vitest-failure-invariants", "playwright-failure-buckets"]
+    },
+    {
+      "id": "F-018",
+      "module": "team-hub",
+      "book_ref": "Chapter 11: Building a Team",
+      "release": "v3.0",
+      "priority": "P1",
+      "status": "planned",
+      "title": "هاب تیم طراحی زندگی (۴ حلقه، تفکیک Advice/Counsel و دستور جلسه)",
+      "description": "مدیریت ۴ حلقه ارتباطی (Supporters, Players, Intimates, Life Design Team)، راهنمای Advice در برابر Counsel و تمپلیت جلسات تیم با ۴ قانون جلسه متصل به بازخورد ادیسه.",
+      "mindsets": ["radical_collaboration"],
+      "dependencies": ["F-009", "F-015"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/domain", "@odyssey/application", "@odyssey/storage-sqlite", "@odyssey/web"],
+      "acceptance_criteria": [
+        "هر مخاطب در یکی از ۴ حلقه تعریف‌شده دسته‌بندی می‌شود.",
+        "تمپلیت جلسه تیم شامل چک‌لیست ۴ قانون (محترمانه، محرمانه، مشارکتی، زایا) است و یادداشت‌هایش مستقیم به کارت ادیسه لینک می‌شود."
+      ],
+      "test_requirements": ["playwright-team-hub"]
+    },
+    {
+      "id": "F-019",
+      "module": "plugins",
+      "book_ref": "Extensibility & Chapter 11 Counsel",
+      "release": "v3.0",
+      "priority": "P2",
+      "status": "planned",
+      "title": "Plugin SDK ایزوله و پلاگین مرجع BYOK AI Counsel",
+      "description": "زیرساخت افزونه‌ها با Permission Manifest و پلاگین اختیاری اتصال مستقیم به Ollama لوکال یا کلید API شخصی کاربر که صرفاً در نقش همفکر (Counsel) سؤال می‌پرسد.",
+      "mindsets": ["curiosity", "reframing", "radical_collaboration"],
+      "dependencies": ["F-007", "F-009", "F-012"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/plugin-sdk", "@odyssey/web"],
+      "acceptance_criteria": [
+        "هسته اپ بدون نصب هیچ پلاگینی ۱۰۰٪ کار می‌کند و هیچ کلید API در کدبیس وجود ندارد.",
+        "پلاگین BYOK قبل از ارسال هر داده به مدل، مجوز صریح کاربر (Read-Only Scope) می‌گیرد و خروجی آن روی پرسشگری (Counsel) تنظیم شده است."
+      ],
+      "test_requirements": ["vitest-plugin-sandbox"]
+    },
+    {
+      "id": "F-020",
+      "module": "sync",
+      "book_ref": "Platform Enterprise Sync",
+      "release": "v3.0",
+      "priority": "P2",
+      "status": "planned",
+      "title": "موتور همگام‌سازی CR-SQLite/HLC و رله اختیاری E2EE Self-Hosted",
+      "description": "پیاده‌سازی ISyncAdapter، همگام‌سازی بدون تعارض بین چند دستگاه (WebDAV/S3/Self-Hosted Relay) با رمزنگاری سرتاسری Zero-Knowledge و داکر رسمی برای سرور رله.",
+      "mindsets": ["radical_collaboration", "awareness"],
+      "dependencies": ["F-002", "F-003", "F-012"],
+      "domain_invariants": [],
+      "packages_touched": ["@odyssey/sync-engine", "@odyssey/sync-server", "@odyssey/crypto"],
+      "acceptance_criteria": [
+        "ویرایش همزمان آفلاین روی دو دستگاه پس از اتصال بدون از دست رفتن داده با HLC/CRDT ادغام می‌شود.",
+        "سرور رله apps/sync-server تنها Blobهای رمزنگاری‌شده را دریافت و ذخیره می‌کند و قادر به خواندن هیچ متنی نیست."
+      ],
+      "test_requirements": ["vitest-crdt-merge", "playwright-multi-client-sync"]
+    }
+  ]
+}
