@@ -13,6 +13,7 @@ import {
   GravityBoard,
   MindsetBadge,
   OdysseyPlansStudio,
+  PrototypingLab,
   TactileGauge,
   containsPhysicalCss,
 } from "../src/index.js";
@@ -182,6 +183,36 @@ describe("Odyssey UI Component Suite", () => {
     expect(html).toContain("توسعه معماری سیستم و رهبری مهندسی");
     expect(html).toContain("تدریس و استودیوی مستقل طراحی ابزار");
     expect(html).toContain("زیست آرام و پژوهش فلسفه تاریخ");
+    expect(containsPhysicalCss(html)).toBe(false);
+  });
+
+  it("renders PrototypingLab with prototype cards, badges, and logical classes", () => {
+    const html = renderToStaticMarkup(
+      <PrototypingLab
+        prototypes={[
+          {
+            id: "proto-1",
+            type: "CONVERSATION",
+            title: "مصاحبه با معمار ارشد سیستم",
+            hypothesis: "آیا چالش‌های طراحی سیستم‌های محلی در بازار جدی است؟",
+            intervieweeRole: "معمار ارشد",
+            status: "COMPLETED",
+            nextStepVerdict: "PROCEED",
+          },
+          {
+            id: "proto-2",
+            type: "EXPERIENCE",
+            title: "آزمون سریع ۲ روزه پروتوتایپ",
+            hypothesis: "آیا معماری محلی واکنش‌گرا و سریع است؟",
+            status: "IN_PROGRESS",
+          },
+        ]}
+        onCreatePrototype={() => {}}
+        t={(k) => k}
+      />,
+    );
+    expect(html).toContain("مصاحبه با معمار ارشد سیستم");
+    expect(html).toContain("آزمون سریع ۲ روزه پروتوتایپ");
     expect(containsPhysicalCss(html)).toBe(false);
   });
 });

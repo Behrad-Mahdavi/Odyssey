@@ -16,11 +16,15 @@ import {
   type JournalEntryItem,
   MindsetBadge,
   type MindsetType,
+  type NextStepVerdict,
   OdysseyPlansStudio,
   type OdysseySlot,
   OnboardingWizard,
   type PlanItem,
   type ProblemItem,
+  type PrototypeItem,
+  type PrototypeStatus,
+  PrototypingLab,
   type ReflectionFindingItem,
   TactileGauge,
   useDirection,
@@ -272,13 +276,90 @@ export function App(): React.JSX.Element {
     }));
   };
 
+  const [prototypes, setPrototypes] = useState<PrototypeItem[]>([
+    {
+      id: "proto-seed-1",
+      odysseyPlanId: "LIFE_2",
+      questionIndex: 0,
+      type: "CONVERSATION",
+      title: "گفت‌وگو با طراحان دوره‌های آموزشی دیزاین",
+      hypothesis: "آیا تقاضای واقعی برای آموزش تفکر طراحی و ابزارسازی مستقل وجود دارد؟",
+      intervieweeRole: "مدرس ارشد بوت‌کمپ و طراح محصول مستقل",
+      status: "COMPLETED",
+      storyQuestions: ["چگونه دوره اول را بازاریابی کردید؟", "سختی‌های حفظ جریان درآمد چه بود؟"],
+      conversationNotes: "بازخورد بسیار مثبت بود. توصیه شد ابتدا با وبینارهای کوتاه تست شود.",
+      referralContact: "سارا رضایی (منتور پروداکت)",
+      nextStepVerdict: "PROCEED",
+      outcome: "تأیید شد که تقاضای ملموس برای مباحث پیشرفته مهندسی ابزار وجود دارد.",
+    },
+    {
+      id: "proto-seed-2",
+      odysseyPlanId: "LIFE_1",
+      questionIndex: 0,
+      type: "EXPERIENCE",
+      title: "آزمون ساخت نسخه پیش‌نمایش در ۲ روز کاری",
+      hypothesis: "آیا می‌توان با استک SQLite WASM معماری پایدار و بدون لگ در مرورگر ساخت؟",
+      costEstimate: "صفر ریال (فقط زمان)",
+      duration: "۲ روز",
+      status: "COMPLETED",
+      nextStepVerdict: "PROCEED",
+      outcome: "پرفورمنس عالی بود و ذخیره‌سازی OPFS با سرعت زیر ۳۰ میلی‌ثانیه کار کرد.",
+    },
+  ]);
+
+  const [activeBridge, setActiveBridge] = useState<{
+    slot: string;
+    questionIndex: number;
+    questionText: string;
+  } | null>(null);
+
   const handleCreatePrototypeFromQuestion = (
     slot: OdysseySlot,
     questionIndex: number,
     questionText: string,
   ) => {
-    // Bridges to Chapter 6 Prototyping Lab (F-010)
-    console.log(`Bridge to prototype: ${slot} Q${questionIndex}: ${questionText}`);
+    setActiveBridge({
+      slot,
+      questionIndex,
+      questionText,
+    });
+  };
+
+  const handleCreatePrototype = (item: Omit<PrototypeItem, "id">) => {
+    const newProto: PrototypeItem = {
+      ...item,
+      id: `proto-${Date.now()}`,
+    };
+    setPrototypes((prev) => [newProto, ...prev]);
+    setActiveBridge(null);
+  };
+
+  const handleUpdatePrototypeStatus = (
+    id: string,
+    status: PrototypeStatus,
+    outcome?: string,
+    verdict?: NextStepVerdict,
+    notes?: string,
+    referral?: string,
+  ) => {
+    setPrototypes((prev) =>
+      prev.map((p) =>
+        p.id === id
+          ? {
+              ...p,
+              status,
+              ...(outcome !== undefined ? { outcome } : {}),
+              ...(verdict !== undefined ? { nextStepVerdict: verdict } : {}),
+              ...(notes !== undefined ? { conversationNotes: notes } : {}),
+              ...(referral !== undefined ? { referralContact: referral } : {}),
+            }
+          : p,
+      ),
+    );
+  };
+
+  const handleDeletePrototype = (id: string) => {
+    setPrototypes((prev) => prev.filter((p) => p.id !== id));
   };
 
   const mindsets: Array<{
@@ -596,6 +677,36 @@ export function App(): React.JSX.Element {
             onUpdatePlan={handleUpdatePlan}
             onSaveFeedback={handleSavePlanFeedback}
             onCreatePrototype={handleCreatePrototypeFromQuestion}
+            t={(k, opt) => (opt ? String(t(k, opt)) : String(t(k)))}
+          />
+        </section>
+
+        {/* Module 5: Chapter 6 Prototyping Lab (Conversations & Experiences) */}
+        <section className="space-y-3 pt-4 border-t border-[var(--border-subtle)]">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-semibold tracking-tight">{t("prototyping.title")}</h2>
+              <p className="text-xs text-[var(--ink-secondary)]">{t("prototyping.desc")}</p>
+            </div>
+            <span className="text-xs font-mono text-[var(--ink-muted)]">Ch. 06</span>
+          </div>
+
+          <ContextualNudge
+            mindset="bias_to_action"
+            mindsetName={t("mindsets.bias_to_action.name")}
+            title={t("nudges.prototypeActionTitle")}
+            prompt={t("nudges.prototypeActionPrompt")}
+            dismissLabel={t("nudges.dismiss")}
+          />
+
+          <PrototypingLab
+            prototypes={prototypes}
+            onCreatePrototype={handleCreatePrototype}
+            onUpdatePrototypeStatus={handleUpdatePrototypeStatus}
+            onDeletePrototype={handleDeletePrototype}
+            initialPlanSlot={activeBridge?.slot}
+            initialQuestionIndex={activeBridge?.questionIndex}
+            initialQuestionText={activeBridge?.questionText}
             t={(k, opt) => (opt ? String(t(k, opt)) : String(t(k)))}
           />
         </section>

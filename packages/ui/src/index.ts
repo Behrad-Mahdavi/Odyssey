@@ -20,6 +20,7 @@ export * from "./components/gravity-board.js";
 export * from "./components/compass-editor.js";
 export * from "./components/good-time-journal.js";
 export * from "./components/odyssey-plans-studio.js";
+export * from "./components/prototyping-lab.js";
 
 // Providers
 export * from "./providers/theme-provider.js";

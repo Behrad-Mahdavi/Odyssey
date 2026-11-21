@@ -230,7 +230,7 @@
       "book_ref": "Chapter 6: Prototyping",
       "release": "v1.0",
       "priority": "P0",
-      "status": "planned",
+      "status": "completed",
       "title": "آزمایشگاه پروتوتایپ (مکالمات داستان‌محور، تجربه‌ها و طوفان فکری)",
       "description": "تبدیل مستقیم هر یک از ۳ سؤال ادیسه به کارت‌های Prototype Conversation و Prototype Experience به همراه بوم طوفان فکری ساختاریافته.",
       "mindsets": ["bias_to_action", "curiosity", "radical_collaboration"],
