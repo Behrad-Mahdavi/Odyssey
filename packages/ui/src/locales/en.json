@@ -134,5 +134,31 @@
     "selectFile": "Select backup file...",
     "exportMarkdown": "Archival Export (Markdown)",
     "exportJson": "Structured Export (JSON)"
+  },
+  "onboarding": {
+    "title": "Welcome to Odyssey: Life Design Studio",
+    "step1Title": "Design Thinking for Wicked Problems",
+    "step1Desc": "Life is not an engineering problem with a singular pre-calculated outcome; it is dynamic and inherently wicked. Life design is about building your way forward starting exactly where you are.",
+    "step1MythTitle": "Dismantling the 'Passion First' Myth",
+    "step1MythDesc": "You do not need to wait for a sudden revelation of passion before starting; meaningful passion and direction are the downstream byproduct of action, curiosity, and testing small prototypes in the real world.",
+    "step2Title": "The Five Mindsets of a Life Designer",
+    "step2Desc": "Five behavioral compass points for navigating ambiguity:",
+    "step3Title": "Studio Blueprint & Instruments",
+    "step3Desc": "Calibrated current-state assessment (HWPL), Work & Life Compass views, Good Time Journal with AEIOU, three parallel five-year Odyssey Plans, and prototyping inquiries.",
+    "step4Title": "Initialize Design Cycle 1",
+    "step4Desc": "Your inaugural Cycle 1 workspace is ready. Ready to enter your drafting studio?",
+    "startButton": "Enter Drafting Studio",
+    "nextStep": "Next Step",
+    "prevStep": "Previous",
+    "skip": "Skip",
+    "reopenOnboarding": "5 Mindsets Guide",
+    "stepIndicator": "Step {{current}} of {{total}}"
+  },
+  "nudges": {
+    "dismiss": "Acknowledged",
+    "hwplCuriosityTitle": "Curiosity in Where You Are",
+    "hwplCuriosityPrompt": "Assess each of the four gauges without self-judgment, adopting the perspective of an inquisitive investigator.",
+    "odysseyBiasTitle": "Bias to Action Across Horizons",
+    "odysseyBiasPrompt": "Instead of debating plan perfection, formulate a question testable through a 20-minute conversation or rapid prototype."
   }
 }

@@ -14,6 +14,8 @@ export * from "./components/compact-tooltip.js";
 export * from "./components/tactile-gauge.js";
 export * from "./components/mindset-badge.js";
 export * from "./components/dialog.js";
+export * from "./components/contextual-nudge.js";
+export * from "./components/onboarding-wizard.js";
 
 // Providers
 export * from "./providers/theme-provider.js";

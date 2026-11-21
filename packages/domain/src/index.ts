@@ -6,3 +6,4 @@ export * from "./core/range-validator.js";
 export * from "./types/uuid.js";
 export * from "./types/hlc.js";
 export * from "./entities/design-cycle.entity.js";
+export * from "./entities/mindset-nudge.entity.js";

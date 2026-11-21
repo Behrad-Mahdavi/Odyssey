@@ -14,6 +14,8 @@ describe("Web App & PWA Sanity (F-004)", () => {
     expect(i18n.hasResourceBundle("fa", "translation")).toBe(true);
     expect(i18n.hasResourceBundle("en", "translation")).toBe(true);
     expect(i18n.t("common.appName")).toBe("Odyssey");
+    expect(i18n.t("onboarding.step1MythTitle")).toBeTruthy();
+    expect(i18n.t("nudges.hwplCuriosityTitle")).toBeTruthy();
   });
 
   it("should include PWA Web Manifest with standalone display and offline icons", () => {

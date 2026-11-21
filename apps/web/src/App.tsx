@@ -6,21 +6,42 @@ import {
   CardHeader,
   CardTitle,
   CompactTooltip,
+  ContextualNudge,
   MindsetBadge,
   type MindsetType,
+  OnboardingWizard,
   TactileGauge,
   useDirection,
   useTheme,
 } from "@odyssey/ui";
-import { Globe, Lock, Moon, ShieldCheck, Sun } from "lucide-react";
+import { Globe, HelpCircle, Lock, Moon, ShieldCheck, Sun } from "lucide-react";
 import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export function App(): React.JSX.Element {
   const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const { locale, toggleLocale } = useDirection();
+
+  // Onboarding modal state
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const completed = localStorage.getItem("odyssey_onboarding_completed");
+      if (completed !== "true") {
+        setShowOnboarding(true);
+      }
+    }
+  }, []);
+
+  const handleOnboardingComplete = () => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("odyssey_onboarding_completed", "true");
+    }
+    setShowOnboarding(false);
+  };
 
   // State for Chapter 1 Gauges
   const [gaugeValues, setGaugeValues] = useState<Record<string, number>>({
@@ -68,6 +89,14 @@ export function App(): React.JSX.Element {
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--bg-canvas)] text-[var(--ink-primary)]">
+      {/* Onboarding Wizard Modal */}
+      <OnboardingWizard
+        open={showOnboarding}
+        onOpenChange={setShowOnboarding}
+        onComplete={handleOnboardingComplete}
+        t={(k, opt) => (opt ? String(t(k, opt)) : String(t(k)))}
+      />
+
       {/* Studio Header Bar */}
       <header className="border-b border-[var(--border-subtle)] bg-[var(--bg-surface)] ps-6 pe-6 py-3">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
@@ -82,6 +111,20 @@ export function App(): React.JSX.Element {
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Reopen Onboarding / 5 Mindsets Guide */}
+            <CompactTooltip content={t("onboarding.reopenOnboarding")}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowOnboarding(true)}
+                className="font-mono text-xs gap-1.5"
+                aria-label={t("onboarding.reopenOnboarding")}
+              >
+                <HelpCircle className="w-3.5 h-3.5 text-[var(--ink-secondary)]" />
+                <span className="hidden sm:inline">{t("onboarding.reopenOnboarding")}</span>
+              </Button>
+            </CompactTooltip>
+
             {/* Vault Status Indicator */}
             <CompactTooltip content={t("vault.subtitle")}>
               <div className="inline-flex items-center gap-1.5 ps-2.5 pe-2.5 py-1 rounded-[var(--radius-sm,4px)] text-xs font-mono bg-[var(--bg-subtle)] border border-[var(--border-subtle)] text-[var(--ink-secondary)] select-none cursor-help">
@@ -158,6 +201,15 @@ export function App(): React.JSX.Element {
             <span className="text-xs font-mono text-[var(--ink-muted)]">Ch. 01</span>
           </div>
 
+          {/* Contextual Nudge for HWPL (Curiosity) */}
+          <ContextualNudge
+            mindset="curiosity"
+            mindsetName={t("mindsets.curiosity.name")}
+            title={t("nudges.hwplCuriosityTitle")}
+            prompt={t("nudges.hwplCuriosityPrompt")}
+            dismissLabel={t("nudges.dismiss")}
+          />
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card>
               <CardContent className="pt-4">
@@ -216,6 +268,15 @@ export function App(): React.JSX.Element {
             </div>
             <span className="text-xs font-mono text-[var(--ink-muted)]">Ch. 05</span>
           </div>
+
+          {/* Contextual Nudge for Odyssey (Bias to Action) */}
+          <ContextualNudge
+            mindset="bias_to_action"
+            mindsetName={t("mindsets.bias_to_action.name")}
+            title={t("nudges.odysseyBiasTitle")}
+            prompt={t("nudges.odysseyBiasPrompt")}
+            dismissLabel={t("nudges.dismiss")}
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Plan 1 */}

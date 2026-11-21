@@ -7,6 +7,7 @@ import {
   Card,
   CardHeader,
   CardTitle,
+  ContextualNudge,
   MindsetBadge,
   TactileGauge,
   containsPhysicalCss,
@@ -60,6 +61,21 @@ describe("Odyssey UI Component Suite", () => {
     );
     expect(html).toContain("عنوان کارت");
     expect(html).toContain("border");
+    expect(containsPhysicalCss(html)).toBe(false);
+  });
+
+  it("renders ContextualNudge with mindset badge and prompt", () => {
+    const html = renderToStaticMarkup(
+      <ContextualNudge
+        mindset="bias_to_action"
+        mindsetName="گرایش به عمل"
+        title="آزمودن فرضیه"
+        prompt="یک آزمون کوچک ۵ دقیقه‌ای طراحی کنید."
+      />,
+    );
+    expect(html).toContain("[گرایش به عمل]");
+    expect(html).toContain("آزمودن فرضیه");
+    expect(html).toContain("یک آزمون کوچک ۵ دقیقه‌ای طراحی کنید.");
     expect(containsPhysicalCss(html)).toBe(false);
   });
 });
