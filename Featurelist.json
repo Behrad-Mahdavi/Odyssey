@@ -147,7 +147,7 @@
       "book_ref": "Chapter 1: Start Where You Are",
       "release": "v1.0",
       "priority": "P0",
-      "status": "planned",
+      "status": "completed",
       "title": "داشبورد HWPL و فیلتر مسائل گرانشی (Gravity Problems)",
       "description": "چهار درجه‌سنج تعاملی Health، Work، Play و Love با ثبت تاریخچه + برد تفکیک مسائل به دو دسته Gravity (واقعیت پذیرفته‌شده) و Designable (قابل طراحی).",
       "mindsets": ["awareness", "reframing"],

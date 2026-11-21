@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
   ContextualNudge,
+  GravityBoard,
   MindsetBadge,
   TactileGauge,
   containsPhysicalCss,
@@ -76,6 +77,23 @@ describe("Odyssey UI Component Suite", () => {
     expect(html).toContain("[گرایش به عمل]");
     expect(html).toContain("آزمودن فرضیه");
     expect(html).toContain("یک آزمون کوچک ۵ دقیقه‌ای طراحی کنید.");
+    expect(containsPhysicalCss(html)).toBe(false);
+  });
+
+  it("renders GravityBoard with 2 columns and logical classes", () => {
+    const html = renderToStaticMarkup(
+      <GravityBoard
+        problems={[
+          { id: "1", content: "بودجه شرکت ثابت است", isGravity: true },
+          { id: "2", content: "بهبود مهارت تایپ‌اسکریپت", isGravity: false },
+        ]}
+        onAddProblem={() => {}}
+        onToggleClassification={() => {}}
+        t={(k) => k}
+      />,
+    );
+    expect(html).toContain("بودجه شرکت ثابت است");
+    expect(html).toContain("بهبود مهارت تایپ‌اسکریپت");
     expect(containsPhysicalCss(html)).toBe(false);
   });
 });

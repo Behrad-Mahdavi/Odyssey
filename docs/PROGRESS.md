@@ -9,13 +9,14 @@ This document tracks completed features, active architectural state, and immedia
 - [x] **Enterprise DevOps & Governance:** GitHub issue/PR templates, CI/CD workflows, CODEOWNERS, ruleset configs, audit scripts (zero-telemetry, logical CSS, i18n parity), and ADRs 0000-0005.
 - [x] **F-002 (Storage Engine):** SQLite WASM + OPFS Web Worker architecture, Drizzle ORM schema, versioned MigrationRunner, Persian FTS5 search (<0.5ms on 10,000 records), and multi-tab Web Locks safety.
 - [x] **F-003 (Zero-Knowledge Vault):** Client-side Argon2id key derivation, AES-256-GCM envelope (KEK/DEK), zero-knowledge `.odybundle` export/import engine, XState v5 vault state machine with auto-lock and memory zeroization.
-- [x] **F-004 (Design System & PWA):** Dual-theme Archival Paper & Copperplate Void tokens, 100% CSS Logical Properties, Radix UI component library (`Button`, `Card`, `TactileGauge`, `CompactTooltip`, `MindsetBadge`, `Dialog`), 128-key bilingual i18n (`fa-IR` RTL / `en-US` LTR), and offline-first PWA with Service Worker and Web Manifest.
+- [x] **F-004 (Design System & PWA):** Dual-theme Archival Paper & Copperplate Void tokens, 100% CSS Logical Properties, Radix UI component library (`Button`, `Card`, `TactileGauge`, `CompactTooltip`, `MindsetBadge`, `Dialog`), 146-key bilingual i18n (`fa-IR` RTL / `en-US` LTR), and offline-first PWA with Service Worker and Web Manifest.
 - [x] **F-005 (Onboarding & 5 Mindsets Backbone):** Design thinking for wicked problems & passion myth reframe, 4-step `OnboardingWizard` modal, `MindsetNudge` domain entity, dismissible `ContextualNudge` alerts, and Cycle 1 initialization.
+- [x] **F-006 (Ch. 1 HWPL Dashboard & Gravity Filter):** `HwplAssessment` domain entity enforcing `INV-01` (0..100), SQLite repository with historical snapshot tracking, `LifeProblem` domain entity, interactive `GravityBoard` separating immovable constraints from designable challenges.
 
 ---
 
 ## Active Phase: Phase 1 (v1.0 Core Studio)
-- Current Target: `F-006` (Ch. 1 HWPL Dashboard & Gravity Filter)
+- Current Target: `F-007` (Ch. 2 Compass Studio: Workview & Lifeview)
   - `F-007` (Ch. 2 Compass Studio)
   - `F-008` (Ch. 3 Good Time Journal 3-Stage Workflow)
   - `F-009` (Ch. 5 Odyssey Plans Creator & Pitch Mode)

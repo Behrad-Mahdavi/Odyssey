@@ -16,6 +16,7 @@ export * from "./components/mindset-badge.js";
 export * from "./components/dialog.js";
 export * from "./components/contextual-nudge.js";
 export * from "./components/onboarding-wizard.js";
+export * from "./components/gravity-board.js";
 
 // Providers
 export * from "./providers/theme-provider.js";

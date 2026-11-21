@@ -7,14 +7,16 @@ import {
   CardTitle,
   CompactTooltip,
   ContextualNudge,
+  GravityBoard,
   MindsetBadge,
   type MindsetType,
   OnboardingWizard,
+  type ProblemItem,
   TactileGauge,
   useDirection,
   useTheme,
 } from "@odyssey/ui";
-import { Globe, HelpCircle, Lock, Moon, ShieldCheck, Sun } from "lucide-react";
+import { Check, Globe, HelpCircle, History, Lock, Moon, ShieldCheck, Sun } from "lucide-react";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -51,8 +53,48 @@ export function App(): React.JSX.Element {
     love: 70,
   });
 
+  const [snapshotSaved, setSnapshotSaved] = useState(false);
+  const [snapshotCount, setSnapshotCount] = useState(1);
+
   const updateGauge = (key: string, val: number) => {
     setGaugeValues((prev) => ({ ...prev, [key]: val }));
+  };
+
+  const handleSaveSnapshot = () => {
+    setSnapshotCount((c) => c + 1);
+    setSnapshotSaved(true);
+    setTimeout(() => setSnapshotSaved(false), 2000);
+  };
+
+  // State for Chapter 1 & 4 Gravity Board
+  const [problems, setProblems] = useState<ProblemItem[]>([
+    {
+      id: "prob-1",
+      content: "قوانین ساعت کاری شرکت فعلی غیرقابل تغییر است",
+      isGravity: true,
+    },
+    {
+      id: "prob-2",
+      content: "آزمودن ۳ سناریوی تدریس مستقل در کنار شغل اصلی",
+      isGravity: false,
+    },
+  ]);
+
+  const handleAddProblem = (content: string) => {
+    const newItem: ProblemItem = {
+      id: `prob-${Date.now()}`,
+      content,
+      isGravity: false,
+    };
+    setProblems((prev) => [newItem, ...prev]);
+  };
+
+  const handleToggleClassification = (id: string) => {
+    setProblems((prev) => prev.map((p) => (p.id === id ? { ...p, isGravity: !p.isGravity } : p)));
+  };
+
+  const handleDeleteProblem = (id: string) => {
+    setProblems((prev) => prev.filter((p) => p.id !== id));
   };
 
   const mindsets: Array<{
@@ -198,7 +240,27 @@ export function App(): React.JSX.Element {
                 تراز چهارگانه سلامت، کار، بازی و عشق — سنجش صادقانه وضعیت فعلی بدون قضاوت
               </p>
             </div>
-            <span className="text-xs font-mono text-[var(--ink-muted)]">Ch. 01</span>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleSaveSnapshot}
+                className="gap-1.5 text-xs font-mono"
+              >
+                {snapshotSaved ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-[var(--signal-positive)]" />
+                    <span>{t("common.saved")}</span>
+                  </>
+                ) : (
+                  <>
+                    <History className="w-3.5 h-3.5 text-[var(--ink-secondary)]" />
+                    <span>{t("hwpl.saveAssessment")}</span>
+                  </>
+                )}
+              </Button>
+              <span className="text-xs font-mono text-[var(--ink-muted)]">Ch. 01</span>
+            </div>
           </div>
 
           {/* Contextual Nudge for HWPL (Curiosity) */}
@@ -255,6 +317,17 @@ export function App(): React.JSX.Element {
               </CardContent>
             </Card>
           </div>
+        </section>
+
+        {/* Gravity vs. Designable Problems Board (Chapter 1 & 4) */}
+        <section>
+          <GravityBoard
+            problems={problems}
+            onAddProblem={handleAddProblem}
+            onToggleClassification={handleToggleClassification}
+            onDeleteProblem={handleDeleteProblem}
+            t={(k, opt) => (opt ? String(t(k, opt)) : String(t(k)))}
+          />
         </section>
 
         {/* Module 2: Chapter 5 Three Odyssey Plans Overview */}

@@ -81,6 +81,26 @@
     "confidence": "اطمینان و تسلط",
     "coherence": "هم‌راستایی با قطب‌نما"
   },
+  "hwpl": {
+    "healthNotes": "توضیح وضعیت سلامت...",
+    "workNotes": "توضیح وضعیت کار و معنا...",
+    "playNotes": "توضیح وضعیت بازی و فراغت...",
+    "loveNotes": "توضیح وضعیت عشق و ارتباط...",
+    "saveAssessment": "ثبت وضعیت فعلی در تاریخچه",
+    "historyTitle": "تاریخچه ارزیابی‌های چرخه",
+    "gravityBoardTitle": "فیلتر مسائل گرانشی (Gravity vs. Designable)",
+    "gravityBoardDesc": "تفکیک مسائلی که واقعیتِ غیرقابل‌تغییر هستند از چالش‌هایی که می‌توان برایشان راه‌حل طراحی کرد.",
+    "addProblemPlaceholder": "یک مسئله یا چالش فعلی زندگی خود را بنویسید...",
+    "addProblemButton": "افزودن مسئله",
+    "designableColumn": "مسائل قابل طراحی (Designable)",
+    "gravityColumn": "واقعیت‌های پذیرفته‌شده (Gravity)",
+    "designableBadge": "قابل طراحی",
+    "gravityBadge": "گرانش / پذیرفته‌شده",
+    "makeGravity": "پذیرش به عنوان گرانش",
+    "makeDesignable": "انتقال به قابل طراحی",
+    "emptyDesignable": "هیچ مسئله قابل طراحی ثبت نشده است.",
+    "emptyGravity": "هنوز واقعیتی به عنوان گرانش فیلتر نشده است."
+  },
   "vault": {
     "title": "گاوصندوق امن محلی",
     "subtitle": "رمزنگاری کلاینت‌ساید با AES-256-GCM و Argon2id. داده‌های شما هرگز از دستگاه خارج نمی‌شوند.",

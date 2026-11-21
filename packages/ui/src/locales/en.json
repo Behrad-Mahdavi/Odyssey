@@ -81,6 +81,26 @@
     "confidence": "Confidence & Capability",
     "coherence": "Compass Coherence"
   },
+  "hwpl": {
+    "healthNotes": "Observations on health and vitality...",
+    "workNotes": "Observations on work and purpose...",
+    "playNotes": "Observations on play and leisure...",
+    "loveNotes": "Observations on love and connection...",
+    "saveAssessment": "Save Current Snapshot to History",
+    "historyTitle": "Cycle Assessment History",
+    "gravityBoardTitle": "Gravity vs. Designable Problems Filter",
+    "gravityBoardDesc": "Distinguishing immovable constraints from challenges that can be prototyped and redesigned.",
+    "addProblemPlaceholder": "Write an active problem or frustration in your life...",
+    "addProblemButton": "Add Problem",
+    "designableColumn": "Designable Challenges",
+    "gravityColumn": "Accepted Realities (Gravity)",
+    "designableBadge": "Designable",
+    "gravityBadge": "Gravity Reality",
+    "makeGravity": "Accept as Gravity",
+    "makeDesignable": "Reframe to Designable",
+    "emptyDesignable": "No designable problems recorded yet.",
+    "emptyGravity": "No gravity problems filtered yet."
+  },
   "vault": {
     "title": "Secure Local Vault",
     "subtitle": "Client-side AES-256-GCM and Argon2id encryption. Your personal reflections never leave your device.",

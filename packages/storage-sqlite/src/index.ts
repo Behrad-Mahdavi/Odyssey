@@ -7,5 +7,7 @@ export * from "./migrations/migration-runner.js";
 export * from "./migrations/0001_initial_schema.js";
 export * from "./repositories/design-cycle.repository.js";
 export * from "./repositories/fts-search.repository.js";
+export * from "./repositories/hwpl-repository.js";
+export * from "./repositories/life-problem-repository.js";
 export * from "./worker/protocol.js";
 export * from "./worker/worker-storage.client.js";

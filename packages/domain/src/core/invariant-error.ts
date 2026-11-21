@@ -25,9 +25,9 @@ export class DomainRangeError extends DomainError {
   public readonly code = "DOMAIN_RANGE_ERROR";
   constructor(
     public readonly fieldName: string,
-    value: number,
-    min: number,
-    max: number,
+    public readonly value: number,
+    public readonly min: number,
+    public readonly max: number,
   ) {
     super(`Field "${fieldName}" value ${value} is outside valid range [${min}, ${max}].`);
   }
