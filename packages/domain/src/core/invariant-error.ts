@@ -42,3 +42,12 @@ export class WordCountInvariantError extends DomainError {
     super(`Word count exceeds maximum limit of ${maxWords} words (actual: ${actualWords}).`);
   }
 }
+
+export class OrphanRecordError extends DomainInvariantError {
+  constructor(entityName: string, parentRelation: string) {
+    super(
+      "INV-04",
+      `${entityName} must be linked to a valid ${parentRelation}. Orphan records are rejected.`,
+    );
+  }
+}

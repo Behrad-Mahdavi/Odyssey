@@ -9,6 +9,7 @@ import {
   CardTitle,
   CompassEditor,
   ContextualNudge,
+  GoodTimeJournal,
   GravityBoard,
   MindsetBadge,
   TactileGauge,
@@ -111,6 +112,30 @@ describe("Odyssey UI Component Suite", () => {
     );
     expect(html).toContain("دیدگاه کار برای من ساخت ابزارهای ارزشمند است.");
     expect(html).toContain("زندگی فرصتی برای یادگیری و اثرگذاری مثبت است.");
+    expect(containsPhysicalCss(html)).toBe(false);
+  });
+
+  it("renders GoodTimeJournal with 3-stage tabs and logical classes", () => {
+    const html = renderToStaticMarkup(
+      <GoodTimeJournal
+        entries={[
+          {
+            id: "entry-1",
+            title: "طراحی معماری تمیز",
+            engagement: 90,
+            energy: 80,
+            isFlow: true,
+            durationMinutes: 60,
+          },
+        ]}
+        onAddEntry={() => {}}
+        t={(k) => k}
+      />,
+    );
+    expect(html).toContain("طراحی معماری تمیز");
+    expect(html).toContain("goodTimeJournal.stage1");
+    expect(html).toContain("goodTimeJournal.stage2");
+    expect(html).toContain("goodTimeJournal.stage3");
     expect(containsPhysicalCss(html)).toBe(false);
   });
 });

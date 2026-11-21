@@ -1,4 +1,5 @@
 import {
+  type AeiouItem,
   Button,
   Card,
   CardContent,
@@ -9,11 +10,14 @@ import {
   type CompassData,
   CompassEditor,
   ContextualNudge,
+  GoodTimeJournal,
   GravityBoard,
+  type JournalEntryItem,
   MindsetBadge,
   type MindsetType,
   OnboardingWizard,
   type ProblemItem,
+  type ReflectionFindingItem,
   TactileGauge,
   useDirection,
   useTheme,
@@ -113,6 +117,75 @@ export function App(): React.JSX.Element {
     setCompassData(data);
     setCompassSaved(true);
     setTimeout(() => setCompassSaved(false), 2000);
+  };
+
+  // State for Chapter 3 Good Time Journal
+  const [journalEntries, setJournalEntries] = useState<JournalEntryItem[]>([
+    {
+      id: "gtj-1",
+      title: "معماری ماژول‌های ذخیره‌سازی محلی و طراحی قراردادها",
+      engagement: 90,
+      energy: 85,
+      isFlow: true,
+      durationMinutes: 90,
+      occurredAt: Date.now() - 3600000 * 2,
+    },
+    {
+      id: "gtj-2",
+      title: "پاسخ به ایمیل‌های اداری تکراری و پرکردن فرم‌های سامانه",
+      engagement: 15,
+      energy: -60,
+      isFlow: false,
+      durationMinutes: 40,
+      occurredAt: Date.now() - 3600000 * 5,
+    },
+  ]);
+
+  const [reflectionFindings, setReflectionFindings] = useState<ReflectionFindingItem[]>([
+    {
+      id: "find-1",
+      journalEntryId: "gtj-1",
+      tag: "INSIGHT",
+      notes: "تمرکز عمیق روی معماری تمیز بدون نوتیفیکیشن انرژی روانی را به جای فرسایش، شارژ می‌کند.",
+    },
+  ]);
+
+  const [aeiouAnalyses, setAeiouAnalyses] = useState<Record<string, AeiouItem>>({
+    "find-1": {
+      reflectionFindingId: "find-1",
+      activities: "طراحی اینترفیس‌ها و تست‌های واحد تمیز",
+      environments: "اتاق آرام، میز کار بدون شلوغی با نور طبیعی",
+      interactions: "تعامل فنی و گفت‌وگوی فکری سطح بالا",
+      objects: "ادیتور متنی ساده و دفترچه یادداشت فیزیکی",
+      users: "توسعه‌دهندگان و کاربران متمرکز",
+    },
+  });
+
+  const handleAddJournalEntry = (entry: Omit<JournalEntryItem, "id">) => {
+    const newEntry: JournalEntryItem = {
+      ...entry,
+      id: `gtj-${Date.now()}`,
+    };
+    setJournalEntries((prev) => [newEntry, ...prev]);
+  };
+
+  const handleDeleteJournalEntry = (id: string) => {
+    setJournalEntries((prev) => prev.filter((e) => e.id !== id));
+  };
+
+  const handleSaveFinding = (finding: Omit<ReflectionFindingItem, "id">) => {
+    const newFinding: ReflectionFindingItem = {
+      ...finding,
+      id: `find-${Date.now()}`,
+    };
+    setReflectionFindings((prev) => [newFinding, ...prev]);
+  };
+
+  const handleSaveAeiou = (analysis: AeiouItem) => {
+    setAeiouAnalyses((prev) => ({
+      ...prev,
+      [analysis.reflectionFindingId]: analysis,
+    }));
   };
 
   const mindsets: Array<{
@@ -381,7 +454,39 @@ export function App(): React.JSX.Element {
           />
         </section>
 
-        {/* Module 3: Chapter 5 Three Odyssey Plans Overview */}
+        {/* Module 3: Chapter 3 Wayfinding & Good Time Journal (3-Stage Workflow + AEIOU) */}
+        <section className="space-y-3 pt-4 border-t border-[var(--border-subtle)]">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-semibold tracking-tight">{t("nav.journal")}</h2>
+              <p className="text-xs text-[var(--ink-secondary)]">
+                {t("goodTimeJournal.matrixDesc")} — کشف فعالیت‌های انرژی‌بخش و فرساینده
+              </p>
+            </div>
+            <span className="text-xs font-mono text-[var(--ink-muted)]">Ch. 03</span>
+          </div>
+
+          <ContextualNudge
+            mindset="curiosity"
+            mindsetName={t("mindsets.curiosity.name")}
+            title={t("nudges.journalCuriosityTitle")}
+            prompt={t("nudges.journalCuriosityPrompt")}
+            dismissLabel={t("nudges.dismiss")}
+          />
+
+          <GoodTimeJournal
+            entries={journalEntries}
+            findings={reflectionFindings}
+            aeiouAnalyses={aeiouAnalyses}
+            onAddEntry={handleAddJournalEntry}
+            onDeleteEntry={handleDeleteJournalEntry}
+            onSaveFinding={handleSaveFinding}
+            onSaveAeiou={handleSaveAeiou}
+            t={(k, opt) => (opt ? String(t(k, opt)) : String(t(k)))}
+          />
+        </section>
+
+        {/* Module 4: Chapter 5 Three Odyssey Plans Overview */}
         <section className="space-y-3 pt-4 border-t border-[var(--border-subtle)]">
           <div className="flex items-center justify-between">
             <div>

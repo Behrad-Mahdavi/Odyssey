@@ -187,7 +187,7 @@
       "book_ref": "Chapter 3: Wayfinding",
       "release": "v1.0",
       "priority": "P0",
-      "status": "planned",
+      "status": "completed",
       "title": "ژورنال زمان‌های خوب ۳ مرحله‌ای (لاگ روزانه ← مرور و غافلگیری‌ها ← AEIOU)",
       "description": "ثبت سریع فعالیت‌ها با دو شاخص Engagement (و Flow) و Energy، ویزارد مرور هفتگی با نمودار دو‌بعدی و تگ‌گذاری Trend/Insight/Surprise، و اجرای فرم AEIOU روی یافته‌های مرحله مرور.",
       "mindsets": ["curiosity", "awareness"],

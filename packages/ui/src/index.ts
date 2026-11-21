@@ -18,6 +18,7 @@ export * from "./components/contextual-nudge.js";
 export * from "./components/onboarding-wizard.js";
 export * from "./components/gravity-board.js";
 export * from "./components/compass-editor.js";
+export * from "./components/good-time-journal.js";
 
 // Providers
 export * from "./providers/theme-provider.js";

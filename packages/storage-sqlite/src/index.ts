@@ -10,5 +10,6 @@ export * from "./repositories/fts-search.repository.js";
 export * from "./repositories/hwpl-repository.js";
 export * from "./repositories/life-problem-repository.js";
 export * from "./repositories/compass-repository.js";
+export * from "./repositories/journal-repository.js";
 export * from "./worker/protocol.js";
 export * from "./worker/worker-storage.client.js";
