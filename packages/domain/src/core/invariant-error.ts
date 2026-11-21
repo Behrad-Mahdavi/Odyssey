@@ -12,7 +12,7 @@ export abstract class DomainError extends Error {
 }
 
 export class DomainInvariantError extends DomainError {
-  public readonly code = "DOMAIN_INVARIANT_VIOLATION";
+  public readonly code: string = "DOMAIN_INVARIANT_VIOLATION";
   constructor(
     public readonly invariantId: string,
     message: string,
@@ -33,13 +33,16 @@ export class DomainRangeError extends DomainError {
   }
 }
 
-export class WordCountInvariantError extends DomainError {
-  public readonly code = "WORD_COUNT_INVARIANT_ERROR";
+export class WordCountInvariantError extends DomainInvariantError {
+  public override readonly code = "WORD_COUNT_INVARIANT_ERROR";
   constructor(
     public readonly maxWords: number,
     public readonly actualWords: number,
   ) {
-    super(`Word count exceeds maximum limit of ${maxWords} words (actual: ${actualWords}).`);
+    super(
+      "INV-03",
+      `Word count exceeds maximum limit of ${maxWords} words (actual: ${actualWords}).`,
+    );
   }
 }
 

@@ -10,12 +10,16 @@ import {
   type CompassData,
   CompassEditor,
   ContextualNudge,
+  type FeedbackItem,
   GoodTimeJournal,
   GravityBoard,
   type JournalEntryItem,
   MindsetBadge,
   type MindsetType,
+  OdysseyPlansStudio,
+  type OdysseySlot,
   OnboardingWizard,
+  type PlanItem,
   type ProblemItem,
   type ReflectionFindingItem,
   TactileGauge,
@@ -186,6 +190,95 @@ export function App(): React.JSX.Element {
       ...prev,
       [analysis.reflectionFindingId]: analysis,
     }));
+  };
+
+  // State for Chapter 5 Three Odyssey Plans
+  const [plans, setPlans] = useState<Record<OdysseySlot, PlanItem>>({
+    LIFE_1: {
+      slot: "LIFE_1",
+      sixWordTitle: "توسعه معماری سیستم و رهبری مهندسی",
+      resources: 85,
+      likability: 80,
+      confidence: 90,
+      coherence: 95,
+      questions: [
+        "آیا نیاز بازار به سیستم‌های محلی پایدار است؟",
+        "چگونه تیم را در بالاترین انگیزه نگه دارم؟",
+        "چه زمانی محصول آماده لانچ نهایی می‌شود؟",
+      ],
+      timelineEvents: [
+        { year: 1, type: "work", description: "معماری و انتشار نسخه ۱ استودیو" },
+        { year: 2, type: "work", description: "گسترش به کاربران دسکتاپ و تیم‌ها" },
+        { year: 3, type: "personal", description: "سفر یک‌ماهه و تجدید قوای ذهنی" },
+      ],
+    },
+    LIFE_2: {
+      slot: "LIFE_2",
+      sixWordTitle: "تدریس و استودیوی مستقل طراحی ابزار",
+      resources: 60,
+      likability: 90,
+      confidence: 70,
+      coherence: 85,
+      questions: [
+        "اولین دوره آموزشی برای چه جامعه‌ای باشد؟",
+        "مدل درآمدی استودیو چگونه تثبیت می‌شود؟",
+        "آیا استقلال کاری با امنیت مالی همخوان است؟",
+      ],
+      timelineEvents: [
+        { year: 1, type: "work", description: "طراحی سرفصل کارگاه‌های تفکر طراحی" },
+        { year: 2, type: "work", description: "تأسیس استودیوی دو نفره" },
+      ],
+    },
+    LIFE_3: {
+      slot: "LIFE_3",
+      sixWordTitle: "زیست آرام و پژوهش فلسفه تاریخ",
+      resources: 40,
+      likability: 95,
+      confidence: 60,
+      coherence: 95,
+      questions: [
+        "کجا برای این سبک زیست مناسب‌تر است؟",
+        "چگونه ارتباط علمی با دانشگاه‌ها حفظ شود؟",
+        "هزینه‌های زندگی چگونه پوشش داده می‌شوند؟",
+      ],
+      timelineEvents: [
+        { year: 1, type: "personal", description: "کوچ به اقلیم آرام و تألیف کتاب" },
+      ],
+    },
+  });
+
+  const [feedbacks, setFeedbacks] = useState<Record<string, FeedbackItem[]>>({});
+
+  const handleUpdatePlan = (updatedPlan: PlanItem) => {
+    setPlans((prev) => ({
+      ...prev,
+      [updatedPlan.slot]: updatedPlan,
+    }));
+  };
+
+  const handleSavePlanFeedback = (
+    slot: OdysseySlot,
+    feedback: { externalFeedback: string; presenterEnergyNote: string },
+  ) => {
+    const newFeedback: FeedbackItem = {
+      id: `fb-${Date.now()}`,
+      odysseyPlanId: slot,
+      externalFeedback: feedback.externalFeedback,
+      presenterEnergyNote: feedback.presenterEnergyNote,
+    };
+    setFeedbacks((prev) => ({
+      ...prev,
+      [slot]: [...(prev[slot] ?? []), newFeedback],
+    }));
+  };
+
+  const handleCreatePrototypeFromQuestion = (
+    slot: OdysseySlot,
+    questionIndex: number,
+    questionText: string,
+  ) => {
+    // Bridges to Chapter 6 Prototyping Lab (F-010)
+    console.log(`Bridge to prototype: ${slot} Q${questionIndex}: ${questionText}`);
   };
 
   const mindsets: Array<{
@@ -486,18 +579,8 @@ export function App(): React.JSX.Element {
           />
         </section>
 
-        {/* Module 4: Chapter 5 Three Odyssey Plans Overview */}
+        {/* Module 4: Chapter 5 Three Odyssey Plans Studio & Pitch Mode */}
         <section className="space-y-3 pt-4 border-t border-[var(--border-subtle)]">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-base font-semibold tracking-tight">{t("nav.odysseyPlans")}</h2>
-              <p className="text-xs text-[var(--ink-secondary)]">
-                سه مسیر پنج‌ساله کاملاً مستقل — نه یک مسیر ایده‌آل و دو نسخه پشتیبان
-              </p>
-            </div>
-            <span className="text-xs font-mono text-[var(--ink-muted)]">Ch. 05</span>
-          </div>
-
           {/* Contextual Nudge for Odyssey (Bias to Action) */}
           <ContextualNudge
             mindset="bias_to_action"
@@ -507,76 +590,14 @@ export function App(): React.JSX.Element {
             dismissLabel={t("nudges.dismiss")}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Plan 1 */}
-            <Card className="border-t-2" style={{ borderTopColor: "var(--path-1)" }}>
-              <CardHeader>
-                <CardTitle className="text-sm">{t("odysseyPlans.life1Title")}</CardTitle>
-                <CardDescription>{t("odysseyPlans.life1Subtitle")}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3 text-xs">
-                <div className="p-2.5 rounded-[var(--radius-sm,4px)] bg-[var(--bg-subtle)] border border-[var(--border-subtle)]">
-                  <span className="block text-[11px] text-[var(--ink-muted)] mb-1">
-                    {t("odysseyPlans.sixWordTitleLabel")}
-                  </span>
-                  <p className="font-medium text-[var(--ink-primary)]">
-                    توسعه معماری سیستم و رهبری مهندسی
-                  </p>
-                </div>
-                <div className="flex justify-end">
-                  <Button variant="ghost" size="sm" className="text-xs text-[var(--path-1)]">
-                    {t("odysseyPlans.convertAction")}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Plan 2 */}
-            <Card className="border-t-2" style={{ borderTopColor: "var(--path-2)" }}>
-              <CardHeader>
-                <CardTitle className="text-sm">{t("odysseyPlans.life2Title")}</CardTitle>
-                <CardDescription>{t("odysseyPlans.life2Subtitle")}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3 text-xs">
-                <div className="p-2.5 rounded-[var(--radius-sm,4px)] bg-[var(--bg-subtle)] border border-[var(--border-subtle)]">
-                  <span className="block text-[11px] text-[var(--ink-muted)] mb-1">
-                    {t("odysseyPlans.sixWordTitleLabel")}
-                  </span>
-                  <p className="font-medium text-[var(--ink-primary)]">
-                    تدریس و استودیوی مستقل طراحی ابزار
-                  </p>
-                </div>
-                <div className="flex justify-end">
-                  <Button variant="ghost" size="sm" className="text-xs text-[var(--path-2)]">
-                    {t("odysseyPlans.convertAction")}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Plan 3 */}
-            <Card className="border-t-2" style={{ borderTopColor: "var(--path-3)" }}>
-              <CardHeader>
-                <CardTitle className="text-sm">{t("odysseyPlans.life3Title")}</CardTitle>
-                <CardDescription>{t("odysseyPlans.life3Subtitle")}</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3 text-xs">
-                <div className="p-2.5 rounded-[var(--radius-sm,4px)] bg-[var(--bg-subtle)] border border-[var(--border-subtle)]">
-                  <span className="block text-[11px] text-[var(--ink-muted)] mb-1">
-                    {t("odysseyPlans.sixWordTitleLabel")}
-                  </span>
-                  <p className="font-medium text-[var(--ink-primary)]">
-                    زیست آرام و پژوهش فلسفه تاریخ
-                  </p>
-                </div>
-                <div className="flex justify-end">
-                  <Button variant="ghost" size="sm" className="text-xs text-[var(--path-3)]">
-                    {t("odysseyPlans.convertAction")}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <OdysseyPlansStudio
+            plans={plans}
+            feedbacks={feedbacks}
+            onUpdatePlan={handleUpdatePlan}
+            onSaveFeedback={handleSavePlanFeedback}
+            onCreatePrototype={handleCreatePrototypeFromQuestion}
+            t={(k, opt) => (opt ? String(t(k, opt)) : String(t(k)))}
+          />
         </section>
       </main>
 

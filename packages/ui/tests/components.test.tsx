@@ -12,6 +12,7 @@ import {
   GoodTimeJournal,
   GravityBoard,
   MindsetBadge,
+  OdysseyPlansStudio,
   TactileGauge,
   containsPhysicalCss,
 } from "../src/index.js";
@@ -136,6 +137,51 @@ describe("Odyssey UI Component Suite", () => {
     expect(html).toContain("goodTimeJournal.stage1");
     expect(html).toContain("goodTimeJournal.stage2");
     expect(html).toContain("goodTimeJournal.stage3");
+    expect(containsPhysicalCss(html)).toBe(false);
+  });
+
+  it("renders OdysseyPlansStudio with 3 parallel paths, gauges and logical classes", () => {
+    const html = renderToStaticMarkup(
+      <OdysseyPlansStudio
+        plans={{
+          LIFE_1: {
+            slot: "LIFE_1",
+            sixWordTitle: "توسعه معماری سیستم و رهبری مهندسی",
+            resources: 80,
+            likability: 85,
+            confidence: 75,
+            coherence: 90,
+            questions: ["سؤال ۱", "سؤال ۲", "سؤال ۳"],
+            timelineEvents: [{ year: 1, type: "work", description: "شروع مسیر" }],
+          },
+          LIFE_2: {
+            slot: "LIFE_2",
+            sixWordTitle: "تدریس و استودیوی مستقل طراحی ابزار",
+            resources: 60,
+            likability: 90,
+            confidence: 65,
+            coherence: 85,
+            questions: ["سؤال ۱", "سؤال ۲", "سؤال ۳"],
+            timelineEvents: [],
+          },
+          LIFE_3: {
+            slot: "LIFE_3",
+            sixWordTitle: "زیست آرام و پژوهش فلسفه تاریخ",
+            resources: 40,
+            likability: 95,
+            confidence: 50,
+            coherence: 95,
+            questions: ["سؤال ۱", "سؤال ۲", "سؤال ۳"],
+            timelineEvents: [],
+          },
+        }}
+        onUpdatePlan={() => {}}
+        t={(k) => k}
+      />,
+    );
+    expect(html).toContain("توسعه معماری سیستم و رهبری مهندسی");
+    expect(html).toContain("تدریس و استودیوی مستقل طراحی ابزار");
+    expect(html).toContain("زیست آرام و پژوهش فلسفه تاریخ");
     expect(containsPhysicalCss(html)).toBe(false);
   });
 });

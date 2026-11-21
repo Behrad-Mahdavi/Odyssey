@@ -11,3 +11,4 @@ export * from "./entities/hwpl-assessment.entity.js";
 export * from "./entities/life-problem.entity.js";
 export * from "./entities/compass-entry.entity.js";
 export * from "./entities/journal-entry.entity.js";
+export * from "./entities/odyssey-plan.entity.js";
