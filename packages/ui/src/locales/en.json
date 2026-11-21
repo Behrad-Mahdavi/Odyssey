@@ -101,6 +101,27 @@
     "emptyDesignable": "No designable problems recorded yet.",
     "emptyGravity": "No gravity problems filtered yet."
   },
+  "compass": {
+    "title": "Workview & Lifeview Compass",
+    "desc": "Calibrate your internal orientation by articulating your philosophy of work and life, resolving friction or synergies.",
+    "workviewTitle": "Workview Philosophy",
+    "workviewDesc": "What is work to you? Money, purpose, service, or personal realization? What defines worthwhile work?",
+    "workviewPlaceholder": "Write deep reflections on your philosophy of work (250 words recommended)...",
+    "lifeviewTitle": "Lifeview Philosophy",
+    "lifeviewDesc": "What gives life enduring meaning? What values are sacred and non-negotiable? Where do humans fit in the universe?",
+    "lifeviewPlaceholder": "Write reflections on your foundational life philosophy and non-negotiable values...",
+    "wordCounter": "{{current}} / {{target}} words",
+    "depthRecommended": "At least 250 words recommended for meaningful cognitive depth",
+    "coherenceTitle": "Compass Coherence & Alignment",
+    "coherenceDesc": "Where do your Workview and Lifeview complement each other, and where do they create tension or conflict?",
+    "complementLabel": "Synergies & Complements",
+    "complementPlaceholder": "Where does your work directly nourish and serve your overarching lifeview?",
+    "conflictLabel": "Friction & Conflicts",
+    "conflictPlaceholder": "Where do practical work realities collide with or compromise your core values?",
+    "guideLabel": "Life Compass Navigational Guide",
+    "guidePlaceholder": "How does this unified compass steer your decisions at major forks in the road?",
+    "saveCompass": "Save Compass to Cycle"
+  },
   "vault": {
     "title": "Secure Local Vault",
     "subtitle": "Client-side AES-256-GCM and Argon2id encryption. Your personal reflections never leave your device.",
@@ -178,6 +199,8 @@
     "dismiss": "Acknowledged",
     "hwplCuriosityTitle": "Curiosity in Where You Are",
     "hwplCuriosityPrompt": "Assess each of the four gauges without self-judgment, adopting the perspective of an inquisitive investigator.",
+    "compassAwarenessTitle": "Awareness in the Compass",
+    "compassAwarenessPrompt": "What is work to you? What core values anchor your life? Notice where they align and where tensions emerge.",
     "odysseyBiasTitle": "Bias to Action Across Horizons",
     "odysseyBiasPrompt": "Instead of debating plan perfection, formulate a question testable through a 20-minute conversation or rapid prototype."
   }

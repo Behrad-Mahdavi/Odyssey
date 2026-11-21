@@ -12,12 +12,12 @@ This document tracks completed features, active architectural state, and immedia
 - [x] **F-004 (Design System & PWA):** Dual-theme Archival Paper & Copperplate Void tokens, 100% CSS Logical Properties, Radix UI component library (`Button`, `Card`, `TactileGauge`, `CompactTooltip`, `MindsetBadge`, `Dialog`), 146-key bilingual i18n (`fa-IR` RTL / `en-US` LTR), and offline-first PWA with Service Worker and Web Manifest.
 - [x] **F-005 (Onboarding & 5 Mindsets Backbone):** Design thinking for wicked problems & passion myth reframe, 4-step `OnboardingWizard` modal, `MindsetNudge` domain entity, dismissible `ContextualNudge` alerts, and Cycle 1 initialization.
 - [x] **F-006 (Ch. 1 HWPL Dashboard & Gravity Filter):** `HwplAssessment` domain entity enforcing `INV-01` (0..100), SQLite repository with historical snapshot tracking, `LifeProblem` domain entity, interactive `GravityBoard` separating immovable constraints from designable challenges.
+- [x] **F-007 (Ch. 2 Compass Studio):** Dual-view `CompassEditor` with side-by-side 68ch measure, non-intrusive word counter supporting Persian ZWNJ, `CompassEntry` domain entity enforcing reflection depth (250 words target), SQLite repository, and 3-field Coherence synthesis (Complementary, Conflicting, Life Guide).
 
 ---
 
 ## Active Phase: Phase 1 (v1.0 Core Studio)
-- Current Target: `F-007` (Ch. 2 Compass Studio: Workview & Lifeview)
-  - `F-007` (Ch. 2 Compass Studio)
+- Current Target: `F-008` (Ch. 3 Good Time Journal 3-Stage Workflow)
   - `F-008` (Ch. 3 Good Time Journal 3-Stage Workflow)
   - `F-009` (Ch. 5 Odyssey Plans Creator & Pitch Mode)
   - `F-010` (Ch. 6 Prototyping Lab)

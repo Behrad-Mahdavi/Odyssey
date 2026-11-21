@@ -10,4 +10,5 @@ export * from "./ports/search.port.js";
 export * from "./ports/design-cycle.repository.port.js";
 export * from "./ports/unit-of-work.port.js";
 export * from "./ports/hwpl.port.js";
+export * from "./ports/compass.port.js";
 export * from "./machines/vault.machine.js";

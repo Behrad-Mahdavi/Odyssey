@@ -6,6 +6,8 @@ import {
   CardHeader,
   CardTitle,
   CompactTooltip,
+  type CompassData,
+  CompassEditor,
   ContextualNudge,
   GravityBoard,
   MindsetBadge,
@@ -95,6 +97,22 @@ export function App(): React.JSX.Element {
 
   const handleDeleteProblem = (id: string) => {
     setProblems((prev) => prev.filter((p) => p.id !== id));
+  };
+
+  // State for Chapter 2 Compass Studio
+  const [compassData, setCompassData] = useState<CompassData>({
+    workview: "",
+    lifeview: "",
+    coherenceComplement: "",
+    coherenceConflict: "",
+    coherenceGuide: "",
+  });
+  const [compassSaved, setCompassSaved] = useState(false);
+
+  const handleSaveCompass = (data: CompassData) => {
+    setCompassData(data);
+    setCompassSaved(true);
+    setTimeout(() => setCompassSaved(false), 2000);
   };
 
   const mindsets: Array<{
@@ -330,7 +348,40 @@ export function App(): React.JSX.Element {
           />
         </section>
 
-        {/* Module 2: Chapter 5 Three Odyssey Plans Overview */}
+        {/* Module 2: Chapter 2 Building a Compass (Workview / Lifeview & Coherence) */}
+        <section className="space-y-3 pt-4 border-t border-[var(--border-subtle)]">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-semibold tracking-tight">{t("nav.compass")}</h2>
+              <p className="text-xs text-[var(--ink-secondary)]">{t("compass.desc")}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              {compassSaved && (
+                <span className="inline-flex items-center gap-1 text-xs text-[var(--signal-positive)] font-mono">
+                  <Check className="w-3.5 h-3.5" />
+                  {t("common.saved")}
+                </span>
+              )}
+              <span className="text-xs font-mono text-[var(--ink-muted)]">Ch. 02</span>
+            </div>
+          </div>
+
+          <ContextualNudge
+            mindset="awareness"
+            mindsetName={t("mindsets.awareness.name")}
+            title={t("nudges.compassAwarenessTitle")}
+            prompt={t("nudges.compassAwarenessPrompt")}
+            dismissLabel={t("nudges.dismiss")}
+          />
+
+          <CompassEditor
+            initialData={compassData}
+            onSave={handleSaveCompass}
+            t={(k, opt) => (opt ? String(t(k, opt)) : String(t(k)))}
+          />
+        </section>
+
+        {/* Module 3: Chapter 5 Three Odyssey Plans Overview */}
         <section className="space-y-3 pt-4 border-t border-[var(--border-subtle)]">
           <div className="flex items-center justify-between">
             <div>

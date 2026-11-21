@@ -7,6 +7,7 @@ import {
   Card,
   CardHeader,
   CardTitle,
+  CompassEditor,
   ContextualNudge,
   GravityBoard,
   MindsetBadge,
@@ -94,6 +95,22 @@ describe("Odyssey UI Component Suite", () => {
     );
     expect(html).toContain("بودجه شرکت ثابت است");
     expect(html).toContain("بهبود مهارت تایپ‌اسکریپت");
+    expect(containsPhysicalCss(html)).toBe(false);
+  });
+
+  it("renders CompassEditor with dual views and logical classes", () => {
+    const html = renderToStaticMarkup(
+      <CompassEditor
+        initialData={{
+          workview: "دیدگاه کار برای من ساخت ابزارهای ارزشمند است.",
+          lifeview: "زندگی فرصتی برای یادگیری و اثرگذاری مثبت است.",
+        }}
+        onSave={() => {}}
+        t={(k) => k}
+      />,
+    );
+    expect(html).toContain("دیدگاه کار برای من ساخت ابزارهای ارزشمند است.");
+    expect(html).toContain("زندگی فرصتی برای یادگیری و اثرگذاری مثبت است.");
     expect(containsPhysicalCss(html)).toBe(false);
   });
 });
