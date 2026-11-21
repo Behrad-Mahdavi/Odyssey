@@ -17,7 +17,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@odyssey/domain": "workspace:*"
+    "@odyssey/domain": "workspace:*",
+    "xstate": "^5.33.4",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "typescript": "^5.7.3",

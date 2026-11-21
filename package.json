@@ -15,6 +15,7 @@
     "audit:css": "node scripts/audit-logical-css.mjs",
     "audit:i18n": "node scripts/audit-i18n-parity.mjs",
     "test:unit": "turbo run test:unit",
+    "test:e2e": "playwright test",
     "test": "turbo run test",
     "prepare": "husky"
   },
@@ -27,6 +28,7 @@
     "@changesets/cli": "^2.27.12",
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
+    "@playwright/test": "^1.65.1",
     "dependency-cruiser": "^16.10.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",

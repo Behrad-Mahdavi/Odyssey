@@ -1,1 +1,3 @@
-export const CRYPTO_VERSION = "1.0.0";
+export * from "./bundle/odybundle.schema.js";
+export * from "./utils/zeroize.js";
+export * from "./service/web-crypto.service.js";

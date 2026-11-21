@@ -87,7 +87,7 @@
       "book_ref": "Platform Core",
       "release": "v1.0",
       "priority": "P0",
-      "status": "planned",
+      "status": "completed",
       "title": "گاوصندوق Zero-Knowledge (AES-256-GCM + Argon2id)",
       "description": "پیاده‌سازی لایه رمزنگاری کلاینت‌ساید با Argon2id برای مشتق‌سازی کلید، رمزنگاری AES-256-GCM، قفل خودکار بر اساس بیکاری و بسته‌های بکاپ امضاشده با SHA-256.",
       "mindsets": ["awareness"],

@@ -23,9 +23,10 @@ export async function setupFts5(driver: ISqlDriver): Promise<void> {
     );
   `);
 
-  // 2. Triggers for journal_entries
+  // 2. Triggers for journal_entries (with Soft-Delete deleted_at support)
   await driver.exec(`
-    CREATE TRIGGER IF NOT EXISTS trg_journal_insert AFTER INSERT ON journal_entries BEGIN
+    CREATE TRIGGER IF NOT EXISTS trg_journal_insert AFTER INSERT ON journal_entries
+    WHEN new.deleted_at IS NULL BEGIN
       INSERT INTO fts_search_index(entity_id, entity_type, cycle_id, title, content)
       VALUES (new.id, 'journal_entry', new.cycle_id, new.title, new.title);
     END;
@@ -33,7 +34,8 @@ export async function setupFts5(driver: ISqlDriver): Promise<void> {
     CREATE TRIGGER IF NOT EXISTS trg_journal_update AFTER UPDATE ON journal_entries BEGIN
       DELETE FROM fts_search_index WHERE entity_id = old.id;
       INSERT INTO fts_search_index(entity_id, entity_type, cycle_id, title, content)
-      VALUES (new.id, 'journal_entry', new.cycle_id, new.title, new.title);
+      SELECT new.id, 'journal_entry', new.cycle_id, new.title, new.title
+      WHERE new.deleted_at IS NULL;
     END;
 
     CREATE TRIGGER IF NOT EXISTS trg_journal_delete AFTER DELETE ON journal_entries BEGIN
@@ -41,9 +43,10 @@ export async function setupFts5(driver: ISqlDriver): Promise<void> {
     END;
   `);
 
-  // 3. Triggers for aeiou_analyses
+  // 3. Triggers for aeiou_analyses (with Soft-Delete deleted_at support)
   await driver.exec(`
-    CREATE TRIGGER IF NOT EXISTS trg_aeiou_insert AFTER INSERT ON aeiou_analyses BEGIN
+    CREATE TRIGGER IF NOT EXISTS trg_aeiou_insert AFTER INSERT ON aeiou_analyses
+    WHEN new.deleted_at IS NULL BEGIN
       INSERT INTO fts_search_index(entity_id, entity_type, cycle_id, title, content)
       VALUES (new.id, 'aeiou_analysis', new.cycle_id, 'AEIOU Analysis',
               new.activities || ' ' || new.environments || ' ' || new.interactions || ' ' || new.objects || ' ' || new.users);
@@ -52,8 +55,9 @@ export async function setupFts5(driver: ISqlDriver): Promise<void> {
     CREATE TRIGGER IF NOT EXISTS trg_aeiou_update AFTER UPDATE ON aeiou_analyses BEGIN
       DELETE FROM fts_search_index WHERE entity_id = old.id;
       INSERT INTO fts_search_index(entity_id, entity_type, cycle_id, title, content)
-      VALUES (new.id, 'aeiou_analysis', new.cycle_id, 'AEIOU Analysis',
-              new.activities || ' ' || new.environments || ' ' || new.interactions || ' ' || new.objects || ' ' || new.users);
+      SELECT new.id, 'aeiou_analysis', new.cycle_id, 'AEIOU Analysis',
+             new.activities || ' ' || new.environments || ' ' || new.interactions || ' ' || new.objects || ' ' || new.users
+      WHERE new.deleted_at IS NULL;
     END;
 
     CREATE TRIGGER IF NOT EXISTS trg_aeiou_delete AFTER DELETE ON aeiou_analyses BEGIN
@@ -61,9 +65,10 @@ export async function setupFts5(driver: ISqlDriver): Promise<void> {
     END;
   `);
 
-  // 4. Triggers for odyssey_plans
+  // 4. Triggers for odyssey_plans (with Soft-Delete deleted_at support)
   await driver.exec(`
-    CREATE TRIGGER IF NOT EXISTS trg_odyssey_insert AFTER INSERT ON odyssey_plans BEGIN
+    CREATE TRIGGER IF NOT EXISTS trg_odyssey_insert AFTER INSERT ON odyssey_plans
+    WHEN new.deleted_at IS NULL BEGIN
       INSERT INTO fts_search_index(entity_id, entity_type, cycle_id, title, content)
       VALUES (new.id, 'odyssey_plan', new.cycle_id, new.six_word_title, new.six_word_title || ' ' || new.questions_json);
     END;
@@ -71,7 +76,8 @@ export async function setupFts5(driver: ISqlDriver): Promise<void> {
     CREATE TRIGGER IF NOT EXISTS trg_odyssey_update AFTER UPDATE ON odyssey_plans BEGIN
       DELETE FROM fts_search_index WHERE entity_id = old.id;
       INSERT INTO fts_search_index(entity_id, entity_type, cycle_id, title, content)
-      VALUES (new.id, 'odyssey_plan', new.cycle_id, new.six_word_title, new.six_word_title || ' ' || new.questions_json);
+      SELECT new.id, 'odyssey_plan', new.cycle_id, new.six_word_title, new.six_word_title || ' ' || new.questions_json
+      WHERE new.deleted_at IS NULL;
     END;
 
     CREATE TRIGGER IF NOT EXISTS trg_odyssey_delete AFTER DELETE ON odyssey_plans BEGIN
@@ -79,9 +85,10 @@ export async function setupFts5(driver: ISqlDriver): Promise<void> {
     END;
   `);
 
-  // 5. Triggers for prototypes
+  // 5. Triggers for prototypes (with Soft-Delete deleted_at support)
   await driver.exec(`
-    CREATE TRIGGER IF NOT EXISTS trg_prototype_insert AFTER INSERT ON prototypes BEGIN
+    CREATE TRIGGER IF NOT EXISTS trg_prototype_insert AFTER INSERT ON prototypes
+    WHEN new.deleted_at IS NULL BEGIN
       INSERT INTO fts_search_index(entity_id, entity_type, cycle_id, title, content)
       VALUES (new.id, 'prototype', new.cycle_id, new.hypothesis, new.hypothesis || ' ' || coalesce(new.outcome, ''));
     END;
@@ -89,7 +96,8 @@ export async function setupFts5(driver: ISqlDriver): Promise<void> {
     CREATE TRIGGER IF NOT EXISTS trg_prototype_update AFTER UPDATE ON prototypes BEGIN
       DELETE FROM fts_search_index WHERE entity_id = old.id;
       INSERT INTO fts_search_index(entity_id, entity_type, cycle_id, title, content)
-      VALUES (new.id, 'prototype', new.cycle_id, new.hypothesis, new.hypothesis || ' ' || coalesce(new.outcome, ''));
+      SELECT new.id, 'prototype', new.cycle_id, new.hypothesis, new.hypothesis || ' ' || coalesce(new.outcome, '')
+      WHERE new.deleted_at IS NULL;
     END;
 
     CREATE TRIGGER IF NOT EXISTS trg_prototype_delete AFTER DELETE ON prototypes BEGIN
@@ -97,9 +105,10 @@ export async function setupFts5(driver: ISqlDriver): Promise<void> {
     END;
   `);
 
-  // 6. Triggers for failure_logs
+  // 6. Triggers for failure_logs (with Soft-Delete deleted_at support)
   await driver.exec(`
-    CREATE TRIGGER IF NOT EXISTS trg_failure_insert AFTER INSERT ON failure_logs BEGIN
+    CREATE TRIGGER IF NOT EXISTS trg_failure_insert AFTER INSERT ON failure_logs
+    WHEN new.deleted_at IS NULL BEGIN
       INSERT INTO fts_search_index(entity_id, entity_type, cycle_id, title, content)
       VALUES (new.id, 'failure_log', new.cycle_id, new.description,
               new.description || ' ' || coalesce(new.critical_factor, '') || ' ' || coalesce(new.next_action, ''));
@@ -108,8 +117,9 @@ export async function setupFts5(driver: ISqlDriver): Promise<void> {
     CREATE TRIGGER IF NOT EXISTS trg_failure_update AFTER UPDATE ON failure_logs BEGIN
       DELETE FROM fts_search_index WHERE entity_id = old.id;
       INSERT INTO fts_search_index(entity_id, entity_type, cycle_id, title, content)
-      VALUES (new.id, 'failure_log', new.cycle_id, new.description,
-              new.description || ' ' || coalesce(new.critical_factor, '') || ' ' || coalesce(new.next_action, ''));
+      SELECT new.id, 'failure_log', new.cycle_id, new.description,
+             new.description || ' ' || coalesce(new.critical_factor, '') || ' ' || coalesce(new.next_action, '')
+      WHERE new.deleted_at IS NULL;
     END;
 
     CREATE TRIGGER IF NOT EXISTS trg_failure_delete AFTER DELETE ON failure_logs BEGIN
