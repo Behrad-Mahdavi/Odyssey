@@ -15,13 +15,18 @@
     "@odyssey/application": "workspace:*",
     "@odyssey/domain": "workspace:*",
     "@odyssey/ui": "workspace:*",
+    "i18next": "^27.2.2",
+    "lucide-react": "^1.77.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-i18next": "^18.0.3"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
+    "tailwindcss": "^4.3.5",
     "typescript": "^5.7.3",
     "vite": "^6.2.0",
     "vitest": "^3.0.7"

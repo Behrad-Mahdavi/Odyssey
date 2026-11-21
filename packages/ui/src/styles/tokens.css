@@ -1,0 +1,69 @@
+/* Odyssey Design System — Master CSS Tokens & Styles */
+/* Aesthetic Direction: Classical Engraving x Precision Archival Drafting Studio */
+
+@layer base {
+  :root,
+  [data-theme="light"] {
+    --bg-canvas: #f6f5f0;
+    --bg-surface: #fcfbf8;
+    --bg-subtle: #eceae2;
+    --bg-inverted: #111317;
+
+    --ink-primary: #111317;
+    --ink-secondary: #4a4d52;
+    --ink-muted: #7a7d82;
+
+    --border-subtle: #dfddd4;
+    --border-strong: #111317;
+
+    --signal-positive: #1d6b4b;
+    --signal-negative: #a63228;
+    --signal-amber: #9e6312;
+
+    --path-1: #1f4e78;
+    --path-2: #2e6b5e;
+    --path-3: #8c4a27;
+    --gravity-muted: #6b6e75;
+
+    --radius-none: 0px;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+
+    --font-sans: "Estedad", "Vazirmatn", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  [data-theme="dark"] {
+    --bg-canvas: #090b0e;
+    --bg-surface: #101318;
+    --bg-subtle: #171b22;
+    --bg-inverted: #f3f2ec;
+
+    --ink-primary: #f3f2ec;
+    --ink-secondary: #9ca3af;
+    --ink-muted: #636973;
+
+    --border-subtle: #222730;
+    --border-strong: #454d5b;
+
+    --signal-positive: #3eb483;
+    --signal-negative: #e06358;
+    --signal-amber: #e0a442;
+
+    --path-1: #5b9bd5;
+    --path-2: #4fb09b;
+    --path-3: #d9885b;
+    --gravity-muted: #525864;
+  }
+}
+
+/* RTL Specific Rules */
+[dir="rtl"] {
+  letter-spacing: 0 !important;
+}
+
+/* Tabular Numerals for Gauges & Timers */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}

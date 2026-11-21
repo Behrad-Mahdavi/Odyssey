@@ -1,0 +1,138 @@
+{
+  "common": {
+    "appName": "Odyssey",
+    "studioTitle": "استودیوی طراحی زندگی",
+    "tagline": "میز طراحی آرام و محلی برای معماری مسیر زندگی و حرفه",
+    "loading": "در حال بارگذاری...",
+    "save": "ذخیره",
+    "saved": "ذخیره شد",
+    "cancel": "انصراف",
+    "confirm": "تأیید",
+    "delete": "حذف",
+    "edit": "ویرایش",
+    "close": "بستن",
+    "back": "بازگشت",
+    "next": "ادامه",
+    "copy": "کپی",
+    "copied": "کپی شد",
+    "offlineStatus": "آفلاین (حافظه محلی)",
+    "onlineStatus": "همگام",
+    "cycle": "چرخه",
+    "cycleIndicator": "چرخه {{cycle}}",
+    "words": "کلمه",
+    "characters": "کاراکتر"
+  },
+  "nav": {
+    "dashboard": "داشبورد زندگی (HWPL)",
+    "compass": "قطب‌نما (دیدگاه کار و زندگی)",
+    "journal": "ژورنال زمان خوب",
+    "odysseyPlans": "طرح‌های سه‌گانه ادیسه",
+    "prototyping": "آزمایشگاه پروتوتایپ",
+    "decisionRoom": "اتاق تصمیم‌گیری",
+    "failureLog": "مصونیت در برابر شکست",
+    "portability": "پشتیبان‌گیری و خروجی",
+    "lockVault": "قفل کردن گاوصندوق",
+    "settings": "تنظیمات استودیو"
+  },
+  "theme": {
+    "light": "کاغذ آرشیوی (روشن)",
+    "dark": "حکاکی سرمه‌ای (تاریک)",
+    "toggle": "تغییر تم استودیو"
+  },
+  "locale": {
+    "fa": "فارسی",
+    "en": "English",
+    "switch": "تغییر زبان"
+  },
+  "mindsets": {
+    "curiosity": {
+      "name": "کنجکاوی",
+      "tag": "کنجکاوی",
+      "description": "دیدن امکانات پنهان در هر گوشه و طرح پرسش‌های دقیق بدون قضاوت زودهنگام."
+    },
+    "bias_to_action": {
+      "name": "گرایش به عمل",
+      "tag": "گرایش به عمل",
+      "description": "ساختن راه روبه‌جلو با آزمون‌های کوچک، به جای فکر کردن بی‌پایان در اتاق بسته."
+    },
+    "reframing": {
+      "name": "بازچارچوب‌بندی",
+      "tag": "بازچارچوب‌بندی",
+      "description": "تغییر زاویه دید برای رهایی از بن‌بست‌ها و تشخیص واقعیت‌های غیرقابل‌تغییر."
+    },
+    "awareness": {
+      "name": "آگاهی از فرآیند",
+      "tag": "آگاهی",
+      "description": "پذیرش ماهیت نامنظم دیزاین و رها کردن وسواس دستیابی به اولین ایده."
+    },
+    "radical_collaboration": {
+      "name": "همکاری رادیکال",
+      "tag": "همکاری",
+      "description": "زندگی دیزاینی فردی نیست؛ با گفتگوهای کاوشگرانه مسیر را همراه دیگران بسازید."
+    }
+  },
+  "gauges": {
+    "health": "سلامت",
+    "work": "کار و معنا",
+    "play": "بازی و فراغت",
+    "love": "عشق و ارتباط",
+    "resources": "منابع و زمان",
+    "likability": "میزان کشش و علاقه",
+    "confidence": "اطمینان و تسلط",
+    "coherence": "هم‌راستایی با قطب‌نما"
+  },
+  "vault": {
+    "title": "گاوصندوق امن محلی",
+    "subtitle": "رمزنگاری کلاینت‌ساید با AES-256-GCM و Argon2id. داده‌های شما هرگز از دستگاه خارج نمی‌شوند.",
+    "passphraseLabel": "رمز عبور گاوصندوق",
+    "passphrasePlaceholder": "حداقل ۸ کاراکتر وارد کنید...",
+    "confirmPassphrasePlaceholder": "تکرار رمز عبور...",
+    "unlock": "باز کردن گاوصندوق",
+    "lock": "قفل کردن",
+    "initialize": "راه‌اندازی گاوصندوق",
+    "lockedStatus": "گاوصندوق قفل است",
+    "unlockedStatus": "گاوصندوق باز است",
+    "autoLockNotice": "قفل خودکار پس از ۵ دقیقه عدم فعالیت",
+    "passphraseMismatch": "تکرار رمز عبور مطابقت ندارد.",
+    "weakPassphrase": "رمز عبور باید حداقل ۸ کاراکتر باشد."
+  },
+  "odysseyPlans": {
+    "life1Title": "مسیر ۱: استمرار و فراتر",
+    "life1Subtitle": "توسعه و بهینه‌سازی مسیر شغلی و زندگی فعلی شما",
+    "life2Title": "مسیر ۲: دگرگونی و جایگزین",
+    "life2Subtitle": "اگر مسیر اول ناممکن شود یا بازار کار ناگهان دگرگون گردد",
+    "life3Title": "مسیر ۳: افق بی‌قید و آزاد",
+    "life3Subtitle": "بدون محدودیت منابع مالی یا قضاوت اجتماعی، چه خلق می‌کردید؟",
+    "sixWordTitleLabel": "عنوان شش‌کلمه‌ای مسیر",
+    "sixWordTitlePlaceholder": "دقیقاً شش کلمه برای توصیف این پنج سال...",
+    "wordCountIndicator": "{{current}} از {{max}} کلمه",
+    "headlineLimitExceeded": "عنوان نباید بیش از ۶ کلمه باشد.",
+    "keyQuestions": "سه سؤال حیاتی این مسیر",
+    "questionPlaceholder": "چه فرضیه‌ای در این مسیر باید آزمایش شود؟",
+    "convertAction": "+ تبدیل به پروتوتایپ"
+  },
+  "goodTimeJournal": {
+    "activityLabel": "فعالیت روزانه",
+    "activityPlaceholder": "چه کاری انجام می‌دادید؟",
+    "energyLevel": "تراز انرژی",
+    "engagementLevel": "تراز غرقگی و درگیری ذهنی",
+    "flowState": "تجربه جریان روان (Flow)",
+    "flowDescription": "تمرکز عمیق، از دست رفتن حس زمان و لذت درونی بالا",
+    "aeiouTitle": "تحلیل پنج‌گانه AEIOU",
+    "activities": "فعالیت‌ها (Activities)",
+    "environments": "محیط‌ها (Environments)",
+    "interactions": "تعاملات (Interactions)",
+    "objects": "اشیاء و ابزارها (Objects)",
+    "users": "افراد همراه (Users)"
+  },
+  "portability": {
+    "exportTitle": "پشتیبان‌گیری رمزنگاری‌شده (.odybundle)",
+    "exportDesc": "بسته رمزنگاری‌شده شامل کل پایگاه‌داده و وضعیت چرخه با امضای معتبر SHA-256.",
+    "downloadBundle": "دانلود بسته ادیسه",
+    "importTitle": "بازیابی پشتیبان",
+    "importDesc": "بازگردانی فایل .odybundle با رمز عبور تعیین‌شده.",
+    "selectFile": "انتخاب فایل پشتیبان...",
+    "exportMarkdown": "خروجی متن آرشیوی (Markdown)",
+    "exportJson": "خروجی ساختاریافته (JSON)"
+  }
+}

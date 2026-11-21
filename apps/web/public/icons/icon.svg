@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" fill="#090B0E" rx="96"/>
+  <!-- Archival Compass & Drafting Geometry -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="#F3F2EC" stroke-width="6" stroke-dasharray="8 8"/>
+  <circle cx="256" cy="256" r="120" fill="none" stroke="#F3F2EC" stroke-width="4"/>
+  <circle cx="256" cy="256" r="6" fill="#F3F2EC"/>
+  <!-- Compass Needle Lines -->
+  <path d="M 256 96 L 272 240 L 256 256 L 240 240 Z" fill="#F3F2EC"/>
+  <path d="M 256 416 L 240 272 L 256 256 L 272 272 Z" fill="#9CA3AF"/>
+  <path d="M 96 256 L 240 240 L 256 256 L 240 272 Z" fill="#636973"/>
+  <path d="M 416 256 L 272 272 L 256 256 L 272 240 Z" fill="#636973"/>
+</svg>

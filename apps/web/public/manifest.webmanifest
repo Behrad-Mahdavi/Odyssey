@@ -1,0 +1,20 @@
+{
+  "name": "Odyssey — استودیوی طراحی زندگی",
+  "short_name": "Odyssey",
+  "description": "استودیوی بصری، لمسی و آرام برای معماری مسیر زندگی و کار بر پایه متدولوژی Designing Your Life",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F6F5F0",
+  "theme_color": "#111317",
+  "dir": "rtl",
+  "lang": "fa-IR",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

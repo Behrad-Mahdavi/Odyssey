@@ -107,7 +107,7 @@
       "book_ref": "Platform Core",
       "release": "v1.0",
       "priority": "P0",
-      "status": "planned",
+      "status": "completed",
       "title": "دیزاین‌سیستم دوزبانه (RTL/LTR)، فونت محلی و PWA",
       "description": "راه‌اندازی packages/ui با Radix + Tailwind v4 Logical CSS، فونت‌های Self-Hosted (Vazirmatn و Inter)، react-i18next، تقویم شمسی/میلادی و تنظیمات PWA آفلاین.",
       "mindsets": ["awareness"],

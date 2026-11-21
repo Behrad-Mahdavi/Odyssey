@@ -1,0 +1,138 @@
+{
+  "common": {
+    "appName": "Odyssey",
+    "studioTitle": "Life Design Studio",
+    "tagline": "Calm, local drafting table for personal and career architecture",
+    "loading": "Loading...",
+    "save": "Save",
+    "saved": "Saved",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "copy": "Copy",
+    "copied": "Copied",
+    "offlineStatus": "Offline (Local Vault)",
+    "onlineStatus": "Synced",
+    "cycle": "Cycle",
+    "cycleIndicator": "Cycle {{cycle}}",
+    "words": "words",
+    "characters": "chars"
+  },
+  "nav": {
+    "dashboard": "Life Dashboard (HWPL)",
+    "compass": "Compass (Work & Life Views)",
+    "journal": "Good Time Journal",
+    "odysseyPlans": "Three Odyssey Plans",
+    "prototyping": "Prototyping Lab",
+    "decisionRoom": "Decision Room",
+    "failureLog": "Failure Immunity",
+    "portability": "Backup & Export",
+    "lockVault": "Lock Vault",
+    "settings": "Studio Settings"
+  },
+  "theme": {
+    "light": "Archival Paper (Light)",
+    "dark": "Copperplate Void (Dark)",
+    "toggle": "Toggle Studio Theme"
+  },
+  "locale": {
+    "fa": "فارسی",
+    "en": "English",
+    "switch": "Switch Language"
+  },
+  "mindsets": {
+    "curiosity": {
+      "name": "Curiosity",
+      "tag": "Curiosity",
+      "description": "Notice hidden opportunities everywhere and ask incisive questions without premature judgment."
+    },
+    "bias_to_action": {
+      "name": "Bias to Action",
+      "tag": "Bias to Action",
+      "description": "Build your way forward through small prototypes rather than endless rumination."
+    },
+    "reframing": {
+      "name": "Reframing",
+      "tag": "Reframing",
+      "description": "Shift perspective to break out of dead ends and recognize immovable constraints."
+    },
+    "awareness": {
+      "name": "Process Awareness",
+      "tag": "Awareness",
+      "description": "Embrace the messy reality of design and let go of initial idea fixation."
+    },
+    "radical_collaboration": {
+      "name": "Radical Collaboration",
+      "tag": "Collaboration",
+      "description": "Life is not a solo design project; build forward together through explorative conversations."
+    }
+  },
+  "gauges": {
+    "health": "Health",
+    "work": "Work & Purpose",
+    "play": "Play & Leisure",
+    "love": "Love & Community",
+    "resources": "Resources & Time",
+    "likability": "Likability & Pull",
+    "confidence": "Confidence & Capability",
+    "coherence": "Compass Coherence"
+  },
+  "vault": {
+    "title": "Secure Local Vault",
+    "subtitle": "Client-side AES-256-GCM and Argon2id encryption. Your personal reflections never leave your device.",
+    "passphraseLabel": "Vault Passphrase",
+    "passphrasePlaceholder": "Enter at least 8 characters...",
+    "confirmPassphrasePlaceholder": "Confirm passphrase...",
+    "unlock": "Unlock Vault",
+    "lock": "Lock",
+    "initialize": "Initialize Vault",
+    "lockedStatus": "Vault is Locked",
+    "unlockedStatus": "Vault is Unlocked",
+    "autoLockNotice": "Auto-locks after 5 minutes of inactivity",
+    "passphraseMismatch": "Passphrase confirmation does not match.",
+    "weakPassphrase": "Passphrase must be at least 8 characters."
+  },
+  "odysseyPlans": {
+    "life1Title": "Plan 1: Continuity & Beyond",
+    "life1Subtitle": "Evolution and refinement of your current trajectory",
+    "life2Title": "Plan 2: Pivot & Alternative",
+    "life2Subtitle": "If the current path closes or market demands shift abruptly",
+    "life3Title": "Plan 3: Wild Card Horizon",
+    "life3Subtitle": "Without financial constraints or social judgment, what would you craft?",
+    "sixWordTitleLabel": "Six-Word Plan Headline",
+    "sixWordTitlePlaceholder": "Exactly six words capturing this five-year chapter...",
+    "wordCountIndicator": "{{current}} of {{max}} words",
+    "headlineLimitExceeded": "Headline cannot exceed 6 words.",
+    "keyQuestions": "Three Core Inquiries",
+    "questionPlaceholder": "What pivotal hypothesis must this plan test?",
+    "convertAction": "+ Create Prototype"
+  },
+  "goodTimeJournal": {
+    "activityLabel": "Daily Activity",
+    "activityPlaceholder": "What were you engaged in?",
+    "energyLevel": "Energy Balance",
+    "engagementLevel": "Engagement & Focus",
+    "flowState": "Flow State Experience",
+    "flowDescription": "Deep immersion, distortion of time perception, and intrinsic satisfaction",
+    "aeiouTitle": "AEIOU Analysis Framework",
+    "activities": "Activities",
+    "environments": "Environments",
+    "interactions": "Interactions",
+    "objects": "Objects & Tools",
+    "users": "People Present"
+  },
+  "portability": {
+    "exportTitle": "Encrypted Backup (.odybundle)",
+    "exportDesc": "Encrypted bundle containing complete SQLite state and cycle metadata with SHA-256 verification.",
+    "downloadBundle": "Download Odyssey Bundle",
+    "importTitle": "Restore From Backup",
+    "importDesc": "Restore an encrypted .odybundle using your passphrase.",
+    "selectFile": "Select backup file...",
+    "exportMarkdown": "Archival Export (Markdown)",
+    "exportJson": "Structured Export (JSON)"
+  }
+}
