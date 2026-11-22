@@ -250,7 +250,7 @@
       "book_ref": "Platform Core",
       "release": "v1.0",
       "priority": "P0",
-      "status": "planned",
+      "status": "completed",
       "title": "خروجی و ورودی کامل (Encrypted Bundle، JSON و Markdown/Obsidian)",
       "description": "پشتیبانی از Export/Import تک‌کلیکی فایل‌های بکاپ رمزنگاری‌شده با Checksum، بکاپ JSON با اعتبارسنجی Zod و خروجی ساختاری Markdown برای ابزارهای PKM.",
       "mindsets": ["awareness"],

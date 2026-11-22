@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@odyssey/application": "workspace:*",
+    "@odyssey/crypto": "workspace:*",
     "@odyssey/domain": "workspace:*",
     "@odyssey/ui": "workspace:*",
     "i18next": "^27.2.2",

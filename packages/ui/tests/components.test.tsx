@@ -9,6 +9,8 @@ import {
   CardTitle,
   CompassEditor,
   ContextualNudge,
+  DataPortabilityModal,
+  DataPortabilityView,
   GoodTimeJournal,
   GravityBoard,
   MindsetBadge,
@@ -213,6 +215,23 @@ describe("Odyssey UI Component Suite", () => {
     );
     expect(html).toContain("مصاحبه با معمار ارشد سیستم");
     expect(html).toContain("آزمون سریع ۲ روزه پروتوتایپ");
+    expect(containsPhysicalCss(html)).toBe(false);
+  });
+
+  it("renders DataPortabilityView with encrypted bundle, json, and markdown tabs", () => {
+    const html = renderToStaticMarkup(
+      <DataPortabilityView
+        onExportBundle={async () => ({ success: true, data: "{}" })}
+        onImportBundle={async () => ({ success: true, totalRecords: 10 })}
+        onExportJson={async () => ({ success: true, data: "{}" })}
+        onImportJson={async () => ({ success: true, totalRecords: 10 })}
+        onExportMarkdown={async () => ({ success: true, files: { "README.md": "# MOC" } })}
+        t={(k) => k}
+      />,
+    );
+    expect(html).toContain("portability.tabBundle");
+    expect(html).toContain("portability.tabJson");
+    expect(html).toContain("portability.tabMarkdown");
     expect(containsPhysicalCss(html)).toBe(false);
   });
 });

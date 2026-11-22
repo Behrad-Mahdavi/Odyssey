@@ -1,3 +1,5 @@
+import { type OdysseyExportData, OdysseyExportDataSchema } from "@odyssey/application";
+import { WebCryptoService } from "@odyssey/crypto";
 import {
   type AeiouItem,
   Button,
@@ -10,6 +12,7 @@ import {
   type CompassData,
   CompassEditor,
   ContextualNudge,
+  DataPortabilityModal,
   type FeedbackItem,
   GoodTimeJournal,
   GravityBoard,
@@ -30,7 +33,17 @@ import {
   useDirection,
   useTheme,
 } from "@odyssey/ui";
-import { Check, Globe, HelpCircle, History, Lock, Moon, ShieldCheck, Sun } from "lucide-react";
+import {
+  Check,
+  FolderArchive,
+  Globe,
+  HelpCircle,
+  History,
+  Lock,
+  Moon,
+  ShieldCheck,
+  Sun,
+} from "lucide-react";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -42,6 +55,8 @@ export function App(): React.JSX.Element {
 
   // Onboarding modal state
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showPortabilityModal, setShowPortabilityModal] = useState(false);
+  const [cryptoService] = useState(() => new WebCryptoService());
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -362,6 +377,439 @@ export function App(): React.JSX.Element {
     setPrototypes((prev) => prev.filter((p) => p.id !== id));
   };
 
+  // -------------------------------------------------------------
+  // Data Portability & Backup Engine (F-011)
+  // -------------------------------------------------------------
+  const buildExportData = (): OdysseyExportData => {
+    const now = Date.now();
+    const cycleId = "cycle-1";
+
+    return {
+      format: "odyssey-export",
+      schemaVersion: 1,
+      exportedAt: now,
+      appVersion: "1.0.0",
+      data: {
+        designCycles: [
+          {
+            id: cycleId,
+            name: "Cycle 1: Core Studio",
+            status: "ACTIVE",
+            startedAt: now,
+            createdAt: now,
+            updatedAt: now,
+            hlcTimestamp: `node-${now}`,
+          },
+        ],
+        hwplAssessments: [
+          {
+            id: "hwpl-active",
+            cycleId,
+            health: gaugeValues.health ?? 0,
+            work: gaugeValues.work ?? 0,
+            play: gaugeValues.play ?? 0,
+            love: gaugeValues.love ?? 0,
+            healthNotes: "سنجش فعال استودیو",
+            createdAt: now,
+            updatedAt: now,
+            hlcTimestamp: `node-${now}`,
+          },
+        ],
+        lifeProblems: problems.map((p) => ({
+          id: p.id,
+          cycleId,
+          content: p.content,
+          classification: p.isGravity ? "GRAVITY" : "DESIGNABLE",
+          anchorStatement: p.isGravity ? p.content : null,
+          reframedQuestion: null,
+          createdAt: now,
+          updatedAt: now,
+          hlcTimestamp: `node-${now}`,
+        })),
+        compassEntries: [
+          {
+            id: "compass-active",
+            cycleId,
+            workview: compassData.workview,
+            lifeview: compassData.lifeview,
+            coherenceComplement: compassData.coherenceComplement ?? null,
+            coherenceConflict: compassData.coherenceConflict ?? null,
+            coherenceGuide: compassData.coherenceGuide ?? null,
+            createdAt: now,
+            updatedAt: now,
+            hlcTimestamp: `node-${now}`,
+          },
+        ],
+        journalEntries: journalEntries.map((j) => ({
+          id: j.id,
+          cycleId,
+          title: j.title,
+          engagement: j.engagement,
+          energy: j.energy,
+          isFlow: j.isFlow,
+          occurredAt: j.occurredAt ?? now,
+          durationMinutes: j.durationMinutes ?? null,
+          createdAt: now,
+          updatedAt: now,
+          hlcTimestamp: `node-${now}`,
+        })),
+        reflectionFindings: reflectionFindings.map((f) => ({
+          id: f.id,
+          cycleId,
+          journalEntryId: f.journalEntryId ?? null,
+          tag: f.tag,
+          notes: f.notes,
+          createdAt: now,
+          updatedAt: now,
+          hlcTimestamp: `node-${now}`,
+        })),
+        aeiouAnalyses: Object.values(aeiouAnalyses).map((a, idx) => ({
+          id: a.id || `aeiou-${idx}-${now}`,
+          cycleId,
+          reflectionFindingId: a.reflectionFindingId,
+          activities: a.activities,
+          environments: a.environments,
+          interactions: a.interactions,
+          objects: a.objects,
+          users: a.users,
+          createdAt: now,
+          updatedAt: now,
+          hlcTimestamp: `node-${now}`,
+        })),
+        odysseyPlans: Object.values(plans).map((plan) => ({
+          id: `plan-${plan.slot}`,
+          cycleId,
+          slot: plan.slot,
+          sixWordTitle: plan.sixWordTitle,
+          resources: plan.resources,
+          likability: plan.likability,
+          confidence: plan.confidence,
+          coherence: plan.coherence,
+          questionsJson: JSON.stringify(plan.questions),
+          timelineEventsJson: JSON.stringify(plan.timelineEvents),
+          createdAt: now,
+          updatedAt: now,
+          hlcTimestamp: `node-${now}`,
+        })),
+        odysseyFeedbacks: Object.values(feedbacks)
+          .flat()
+          .map((fb, idx) => ({
+            id: fb.id || `fb-${idx}-${now}`,
+            cycleId,
+            odysseyPlanId: `plan-${fb.odysseyPlanId}`,
+            externalFeedback: fb.externalFeedback,
+            presenterEnergyNote: fb.presenterEnergyNote,
+            createdAt: now,
+            updatedAt: now,
+            hlcTimestamp: `node-${now}`,
+          })),
+        prototypes: prototypes.map((proto) => ({
+          id: proto.id,
+          cycleId,
+          odysseyPlanId: proto.odysseyPlanId ? `plan-${proto.odysseyPlanId}` : null,
+          questionIndex: proto.questionIndex ?? null,
+          type: proto.type,
+          hypothesis: proto.hypothesis,
+          status: proto.status,
+          outcome: proto.outcome ?? null,
+          contactId: proto.referralContact ?? null,
+          createdAt: now,
+          updatedAt: now,
+          hlcTimestamp: `node-${now}`,
+        })),
+      },
+    };
+  };
+
+  const applyImportedData = (data: OdysseyExportData): number => {
+    const d = data.data;
+
+    // 1. HWPL
+    const hwpl = d.hwplAssessments[0];
+    if (hwpl) {
+      setGaugeValues({
+        health: hwpl.health,
+        work: hwpl.work,
+        play: hwpl.play,
+        love: hwpl.love,
+      });
+    }
+
+    // 2. Life Problems
+    if (d.lifeProblems.length > 0) {
+      setProblems(
+        d.lifeProblems.map((p) => ({
+          id: p.id,
+          content: p.content,
+          isGravity: p.classification === "GRAVITY",
+          reframedQuestion: p.reframedQuestion ?? undefined,
+        })),
+      );
+    }
+
+    // 3. Compass
+    const comp = d.compassEntries[0];
+    if (comp) {
+      setCompassData({
+        workview: comp.workview,
+        lifeview: comp.lifeview,
+        ...(comp.coherenceComplement ? { coherenceComplement: comp.coherenceComplement } : {}),
+        ...(comp.coherenceConflict ? { coherenceConflict: comp.coherenceConflict } : {}),
+        ...(comp.coherenceGuide ? { coherenceGuide: comp.coherenceGuide } : {}),
+      });
+    }
+
+    // 4. Good Time Journal
+    if (d.journalEntries.length > 0) {
+      setJournalEntries(
+        d.journalEntries.map((j) => ({
+          id: j.id,
+          title: j.title,
+          engagement: j.engagement,
+          energy: j.energy,
+          isFlow: j.isFlow,
+          durationMinutes: j.durationMinutes ?? undefined,
+          occurredAt: j.occurredAt,
+        })),
+      );
+    }
+
+    if (d.reflectionFindings.length > 0) {
+      setReflectionFindings(
+        d.reflectionFindings.map((f) => ({
+          id: f.id,
+          journalEntryId: f.journalEntryId || "gtj-1",
+          tag: f.tag,
+          notes: f.notes,
+        })),
+      );
+    }
+
+    if (d.aeiouAnalyses.length > 0) {
+      const newAeiou: Record<string, AeiouItem> = {};
+      for (const a of d.aeiouAnalyses) {
+        newAeiou[a.reflectionFindingId] = {
+          id: a.id,
+          reflectionFindingId: a.reflectionFindingId,
+          activities: a.activities,
+          environments: a.environments,
+          interactions: a.interactions,
+          objects: a.objects,
+          users: a.users,
+        };
+      }
+      setAeiouAnalyses(newAeiou);
+    }
+
+    // 5. Odyssey Plans
+    if (d.odysseyPlans.length > 0) {
+      const newPlans: Record<OdysseySlot, PlanItem> = { ...plans };
+      for (const op of d.odysseyPlans) {
+        let qs: string[] = ["", "", ""];
+        try {
+          qs = JSON.parse(op.questionsJson);
+        } catch {
+          qs = ["", "", ""];
+        }
+        let evs: Array<{
+          year: 1 | 2 | 3 | 4 | 5;
+          type: "work" | "personal";
+          description: string;
+        }> = [];
+        try {
+          const parsedEvs = JSON.parse(op.timelineEventsJson) as Array<{
+            year: number;
+            type: "work" | "personal";
+            description: string;
+          }>;
+          evs = parsedEvs.map((e) => ({
+            year: Math.min(5, Math.max(1, e.year)) as 1 | 2 | 3 | 4 | 5,
+            type: e.type === "personal" ? "personal" : "work",
+            description: e.description,
+          }));
+        } catch {
+          evs = [];
+        }
+
+        newPlans[op.slot] = {
+          slot: op.slot,
+          sixWordTitle: op.sixWordTitle,
+          resources: op.resources,
+          likability: op.likability,
+          confidence: op.confidence,
+          coherence: op.coherence,
+          questions: [qs[0] ?? "", qs[1] ?? "", qs[2] ?? ""],
+          timelineEvents: evs,
+        };
+      }
+      setPlans(newPlans);
+    }
+
+    // 6. Prototypes
+    if (d.prototypes.length > 0) {
+      setPrototypes(
+        d.prototypes.map((proto) => ({
+          id: proto.id,
+          odysseyPlanId: proto.odysseyPlanId?.replace("plan-", ""),
+          questionIndex: proto.questionIndex ?? undefined,
+          type: proto.type,
+          title: proto.hypothesis,
+          hypothesis: proto.hypothesis,
+          status: proto.status,
+          outcome: proto.outcome ?? undefined,
+        })),
+      );
+    }
+
+    return (
+      d.designCycles.length +
+      d.hwplAssessments.length +
+      d.lifeProblems.length +
+      d.compassEntries.length +
+      d.journalEntries.length +
+      d.reflectionFindings.length +
+      d.aeiouAnalyses.length +
+      d.odysseyPlans.length +
+      d.odysseyFeedbacks.length +
+      d.prototypes.length
+    );
+  };
+
+  const handleExportBundle = async (passphrase: string) => {
+    const data = buildExportData();
+    const rawBytes = new TextEncoder().encode(JSON.stringify(data));
+    const bundleRes = await cryptoService.createBundle(rawBytes, passphrase);
+    if (!bundleRes.ok) {
+      return { success: false, error: bundleRes.error.message };
+    }
+    return { success: true, data: bundleRes.value };
+  };
+
+  const handleImportBundle = async (bundleString: string, passphrase: string) => {
+    const unpackRes = await cryptoService.unpackBundle(bundleString, passphrase);
+    if (!unpackRes.ok) {
+      return { success: false, error: unpackRes.error.message };
+    }
+
+    let parsed: unknown;
+    try {
+      const jsonStr = new TextDecoder().decode(unpackRes.value);
+      parsed = JSON.parse(jsonStr);
+    } catch {
+      return { success: false, error: "رمزگشایی انجام شد اما محتوای فایل JSON معتبر نیست." };
+    }
+
+    const validated = OdysseyExportDataSchema.safeParse(parsed);
+    if (!validated.success) {
+      return { success: false, error: validated.error.message };
+    }
+
+    const total = applyImportedData(validated.data);
+    return { success: true, totalRecords: total };
+  };
+
+  const handleExportJson = async () => {
+    const data = buildExportData();
+    return { success: true, data: JSON.stringify(data, null, 2) };
+  };
+
+  const handleImportJson = async (jsonString: string) => {
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(jsonString);
+    } catch {
+      return { success: false, error: "فایل انتخاب شده یک ساختار JSON معتبر نیست." };
+    }
+
+    const validated = OdysseyExportDataSchema.safeParse(parsed);
+    if (!validated.success) {
+      return { success: false, error: validated.error.message };
+    }
+
+    const total = applyImportedData(validated.data);
+    return { success: true, totalRecords: total };
+  };
+
+  const handleExportMarkdown = async () => {
+    const data = buildExportData();
+    const dateStr = new Date(data.exportedAt).toISOString().split("T")[0] ?? "archive";
+    const files: Record<string, string> = {
+      "README.md": `---
+type: odyssey_archive
+version: 1.0.0
+exportedAt: "${dateStr}"
+---
+
+# Odyssey Life Design Studio — Archive Map of Content (MOC)
+
+این بایگانی شامل مستندات طراحی زندگی شما از استودیوی Odyssey است:
+
+## 🧭 فهرست دسترسی سریع به یادداشت‌ها
+- [[Compass/Workview|دیدگاه کار]]
+- [[Compass/Lifeview|دیدگاه زندگی]]
+- [[Compass/Coherence|انسجام قطب‌نما]]
+- [[Dashboard/HWPL|تراز چهارگانه سلامت، کار، بازی و عشق]]
+- [[Problems/Gravity-and-Designable|تفکیک مسائل گرانشی و چالش‌های طراحی]]
+- [[Journal/Index|دفترچه اوقات خوش]]
+- [[Odyssey/Index|مسیرهای سه‌گانه ادیسه]]
+- [[Prototypes/Index|آزمایشگاه پروتوتایپ]]
+`,
+      "Compass/Workview.md": `---
+type: compass
+view: workview
+---
+
+# دیدگاه کار (Workview)
+
+${compassData.workview}
+`,
+      "Compass/Lifeview.md": `---
+type: compass
+view: lifeview
+---
+
+# دیدگاه زندگی (Lifeview)
+
+${compassData.lifeview}
+`,
+      "Compass/Coherence.md": `---
+type: coherence
+---
+
+# انسجام دیدگاه کار و زندگی
+
+- **نقاط مکمل:** ${compassData.coherenceComplement || "تعیین نشده"}
+- **نقاط تضاد:** ${compassData.coherenceConflict || "تعیین نشده"}
+- **راهنمای عمل:** ${compassData.coherenceGuide || "تعیین نشده"}
+`,
+      "Dashboard/HWPL.md": `---
+type: hwpl_dashboard
+health: ${gaugeValues.health ?? 0}
+work: ${gaugeValues.work ?? 0}
+play: ${gaugeValues.play ?? 0}
+love: ${gaugeValues.love ?? 0}
+---
+
+# تراز چهارگانه زندگی (HWPL)
+
+- سلامت: ${gaugeValues.health ?? 0}%
+- کار: ${gaugeValues.work ?? 0}%
+- بازی: ${gaugeValues.play ?? 0}%
+- عشق: ${gaugeValues.love ?? 0}%
+`,
+      "Problems/Gravity-and-Designable.md": `---
+type: problems
+---
+
+# مسائل گرانشی و چالش‌های قابل طراحی
+
+${problems.map((p) => `- [${p.isGravity ? "مسئله گرانشی ⚠️" : "چالش طراحی 💡"}] ${p.content}`).join("\n")}
+`,
+    };
+
+    return { success: true, files };
+  };
+
   const mindsets: Array<{
     type: MindsetType;
     nameKey: string;
@@ -404,6 +852,18 @@ export function App(): React.JSX.Element {
         t={(k, opt) => (opt ? String(t(k, opt)) : String(t(k)))}
       />
 
+      {/* Data Portability & Backup Modal (F-011) */}
+      <DataPortabilityModal
+        open={showPortabilityModal}
+        onOpenChange={setShowPortabilityModal}
+        onExportBundle={handleExportBundle}
+        onImportBundle={handleImportBundle}
+        onExportJson={handleExportJson}
+        onImportJson={handleImportJson}
+        onExportMarkdown={handleExportMarkdown}
+        t={(k, opt) => (opt ? String(t(k, opt)) : String(t(k)))}
+      />
+
       {/* Studio Header Bar */}
       <header className="border-b border-[var(--border-subtle)] bg-[var(--bg-surface)] ps-6 pe-6 py-3">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
@@ -439,6 +899,20 @@ export function App(): React.JSX.Element {
                 <ShieldCheck className="w-3.5 h-3.5 text-[var(--signal-positive)]" />
                 <span className="text-[11px]">{t("common.offlineStatus")}</span>
               </div>
+            </CompactTooltip>
+
+            {/* Data Portability & Backup Trigger */}
+            <CompactTooltip content={t("portability.title")}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowPortabilityModal(true)}
+                className="font-mono text-xs gap-1.5"
+                aria-label={t("portability.title")}
+              >
+                <FolderArchive className="w-3.5 h-3.5 text-[var(--signal-positive)]" />
+                <span className="hidden sm:inline">{t("portability.openButton")}</span>
+              </Button>
             </CompactTooltip>
 
             {/* Language Switcher */}

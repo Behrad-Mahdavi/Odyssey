@@ -13,5 +13,6 @@ export * from "./repositories/compass-repository.js";
 export * from "./repositories/journal-repository.js";
 export * from "./repositories/odyssey-plan-repository.js";
 export * from "./repositories/prototype-repository.js";
+export * from "./services/portability-service.js";
 export * from "./worker/protocol.js";
 export * from "./worker/worker-storage.client.js";

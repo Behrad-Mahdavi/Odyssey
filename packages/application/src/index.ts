@@ -14,4 +14,5 @@ export * from "./ports/compass.port.js";
 export * from "./ports/journal.port.js";
 export * from "./ports/odyssey-plan.port.js";
 export * from "./ports/prototype.port.js";
+export * from "./ports/portability.port.js";
 export * from "./machines/vault.machine.js";

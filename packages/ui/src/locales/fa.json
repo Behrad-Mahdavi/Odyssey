@@ -250,6 +250,11 @@
     "deletePrototype": "حذف پروتوتایپ"
   },
   "portability": {
+    "title": "بایگانی، پشتیبان‌گیری و انتقال داده‌ها",
+    "subtitle": "مالکیت ۱۰۰٪ محلی داده‌ها — استخراج در فرمت‌های باز و پشتیبان‌های غیرقابل نفوذ",
+    "tabBundle": "بسته رمزنگاری‌شده (.odybundle)",
+    "tabJson": "فایل ساختاریافته (JSON)",
+    "tabMarkdown": "آرشیو نوت‌ها (Markdown/Obsidian)",
     "exportTitle": "پشتیبان‌گیری رمزنگاری‌شده (.odybundle)",
     "exportDesc": "بسته رمزنگاری‌شده شامل کل پایگاه‌داده و وضعیت چرخه با امضای معتبر SHA-256.",
     "downloadBundle": "دانلود بسته ادیسه",
@@ -257,7 +262,20 @@
     "importDesc": "بازگردانی فایل .odybundle با رمز عبور تعیین‌شده.",
     "selectFile": "انتخاب فایل پشتیبان...",
     "exportMarkdown": "خروجی متن آرشیوی (Markdown)",
-    "exportJson": "خروجی ساختاریافته (JSON)"
+    "exportJson": "خروجی ساختاریافته (JSON)",
+    "bundlePassphraseLabel": "رمز عبور بسته پشتیبان",
+    "bundlePassphrasePlaceholder": "رمز عبور برای رمزنگاری یا رمزگشایی...",
+    "bundleConfirmPassLabel": "تکرار رمز عبور",
+    "bundleNotice": "این فایل با استاندارد AES-256-GCM و Argon2id رمزنگاری می‌شود. بازگشایی آن بدون پسورد شما ناممکن است.",
+    "jsonNotice": "هشدار امنیتی: خروجی JSON فاقد رمزنگاری است. آن را در حافظه امن ذخیره کنید.",
+    "restoreAction": "بازیابی و جایگزینی اطلاعات",
+    "restoreSuccess": "{{count}} رکورد با موفقیت در پایگاه‌داده محلی بازیابی شد.",
+    "restoreError": "خطا در بازیابی اطلاعات: {{error}}",
+    "mdPreviewTitle": "فهرست فایل‌های تولیدی در آرشیو Markdown",
+    "downloadMarkdown": "دانلود تمام یادداشت‌ها (Markdown)",
+    "copyMarkdown": "کپی ایندکس Obsidian به حافظه",
+    "copied": "کپی شد!",
+    "openButton": "پشتیبان‌گیری و خروجی"
   },
   "onboarding": {
     "title": "خوش‌آمدید به ادیسه: میز طراحی زندگی",
