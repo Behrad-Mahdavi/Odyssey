@@ -75,14 +75,8 @@ export interface PrototypingLabProps {
   initialPlanSlot?: string | undefined;
   initialQuestionIndex?: number | undefined;
   initialQuestionText?: string | undefined;
+  hideHeader?: boolean;
 }
-
-const DEFAULT_STORY_PROMPTS = [
-  "چگونه وارد این مسیر شدید و نقطه آغاز چه بود؟",
-  "یک روز کاری واقعی در این نقش دقیقاً چگونه می‌گذرد؟",
-  "چه چالش‌ها و واقعیت‌هایی در این حرفه وجود دارد که از بیرون دیده نمی‌شود؟",
-  "با چه کس دیگری در این حوزه پیشنهاد می‌کنید گفت‌وگو کنم؟",
-];
 
 export function PrototypingLab({
   prototypes,
@@ -94,9 +88,17 @@ export function PrototypingLab({
   initialPlanSlot,
   initialQuestionIndex,
   initialQuestionText,
+  hideHeader = true,
 }: PrototypingLabProps): React.JSX.Element {
   const [filter, setFilter] = useState<"ALL" | "CONVERSATION" | "EXPERIENCE">("ALL");
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+
+  const storyPrompts = [
+    t("prototypingLab.prompt1"),
+    t("prototypingLab.prompt2"),
+    t("prototypingLab.prompt3"),
+    t("prototypingLab.prompt4"),
+  ];
 
   // New prototype form state
   const [protoType, setProtoType] = useState<PrototypeType>("CONVERSATION");
@@ -121,12 +123,14 @@ export function PrototypingLab({
   useEffect(() => {
     if (initialQuestionText) {
       setProtoHypothesis(initialQuestionText);
-      setProtoTitle(`آزمون فرضیه: ${initialQuestionText.slice(0, 35)}...`);
+      setProtoTitle(
+        t("prototypingLab.hypothesisTestTitle", { text: initialQuestionText.slice(0, 35) }),
+      );
       setLinkedPlan(initialPlanSlot);
       setLinkedQuestionIdx(initialQuestionIndex);
       setCreateDialogOpen(true);
     }
-  }, [initialQuestionText, initialPlanSlot, initialQuestionIndex]);
+  }, [initialQuestionText, initialPlanSlot, initialQuestionIndex, t]);
 
   const handleOpenCreate = () => {
     setProtoType("CONVERSATION");
@@ -154,7 +158,7 @@ export function PrototypingLab({
       ...(protoType === "CONVERSATION"
         ? {
             intervieweeRole: intervieweeRole.trim() || undefined,
-            storyQuestions: DEFAULT_STORY_PROMPTS,
+            storyQuestions: storyPrompts,
           }
         : {
             costEstimate: costEstimate.trim() || undefined,
@@ -204,17 +208,24 @@ export function PrototypingLab({
 
   return (
     <div className={cn("space-y-6", className)}>
-      {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="w-2 h-2 rounded-full bg-[var(--path-2)]" />
-            <h3 className="text-base font-semibold text-[var(--ink-primary)]">
-              {t("prototypingLab.title")}
-            </h3>
+      {/* Header & Filter Bar */}
+      <div
+        className={cn(
+          "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3",
+          hideHeader && "sm:justify-end",
+        )}
+      >
+        {!hideHeader && (
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="w-2 h-2 rounded-full bg-[var(--path-2)]" />
+              <h3 className="text-base font-semibold text-[var(--ink-primary)]">
+                {t("prototypingLab.title")}
+              </h3>
+            </div>
+            <p className="text-xs text-[var(--ink-secondary)]">{t("prototypingLab.desc")}</p>
           </div>
-          <p className="text-xs text-[var(--ink-secondary)]">{t("prototypingLab.desc")}</p>
-        </div>
+        )}
 
         <div className="flex items-center gap-2">
           {/* Filter Pills */}
@@ -223,10 +234,10 @@ export function PrototypingLab({
               type="button"
               onClick={() => setFilter("ALL")}
               className={cn(
-                "ps-2.5 pe-2.5 py-0.5 rounded transition-colors",
+                "ps-2.5 pe-2.5 py-1 rounded-[var(--radius-sm,4px)] transition-colors cursor-pointer",
                 filter === "ALL"
-                  ? "bg-[var(--bg-surface)] font-medium text-[var(--ink-primary)] shadow-sm"
-                  : "text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]",
+                  ? "bg-[var(--bg-surface)] font-semibold text-[var(--ink-primary)] shadow-xs"
+                  : "text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] font-medium",
               )}
             >
               {t("prototypingLab.filterAll")}
@@ -235,10 +246,10 @@ export function PrototypingLab({
               type="button"
               onClick={() => setFilter("CONVERSATION")}
               className={cn(
-                "ps-2.5 pe-2.5 py-0.5 rounded transition-colors",
+                "ps-2.5 pe-2.5 py-1 rounded-[var(--radius-sm,4px)] transition-colors cursor-pointer",
                 filter === "CONVERSATION"
-                  ? "bg-[var(--bg-surface)] font-medium text-[var(--ink-primary)] shadow-sm"
-                  : "text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]",
+                  ? "bg-[var(--bg-surface)] font-semibold text-[var(--ink-primary)] shadow-xs"
+                  : "text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] font-medium",
               )}
             >
               {t("prototypingLab.filterConversations")}
@@ -247,10 +258,10 @@ export function PrototypingLab({
               type="button"
               onClick={() => setFilter("EXPERIENCE")}
               className={cn(
-                "ps-2.5 pe-2.5 py-0.5 rounded transition-colors",
+                "ps-2.5 pe-2.5 py-1 rounded-[var(--radius-sm,4px)] transition-colors cursor-pointer",
                 filter === "EXPERIENCE"
-                  ? "bg-[var(--bg-surface)] font-medium text-[var(--ink-primary)] shadow-sm"
-                  : "text-[var(--ink-secondary)] hover:text-[var(--ink-primary)]",
+                  ? "bg-[var(--bg-surface)] font-semibold text-[var(--ink-primary)] shadow-xs"
+                  : "text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] font-medium",
               )}
             >
               {t("prototypingLab.filterExperiences")}
@@ -369,7 +380,9 @@ export function PrototypingLab({
                     : (proto.costEstimate || proto.duration) && (
                         <div className="flex items-center gap-3 text-[11px] text-[var(--ink-secondary)] bg-[var(--bg-subtle)]/40 p-2 rounded">
                           {proto.costEstimate && (
-                            <span className="truncate">منابع: {proto.costEstimate}</span>
+                            <span className="truncate">
+                              {t("prototypingLab.costLabel")}: {proto.costEstimate}
+                            </span>
                           )}
                           {proto.duration && (
                             <span className="font-mono text-[10px]">({proto.duration})</span>
@@ -382,27 +395,48 @@ export function PrototypingLab({
                     <div className="p-2.5 rounded-[var(--radius-sm,4px)] bg-[var(--bg-subtle)] border border-[var(--border-subtle)] space-y-1.5 text-[11px]">
                       {proto.conversationNotes && (
                         <p className="text-[var(--ink-primary)]">
-                          <strong className="text-[var(--ink-secondary)]">یادداشت: </strong>
+                          <strong className="text-[var(--ink-secondary)]">
+                            {t("prototypingLab.notesLabel")}:{" "}
+                          </strong>
                           {proto.conversationNotes}
                         </p>
                       )}
                       {proto.outcome && (
                         <p className="text-[var(--ink-primary)]">
-                          <strong className="text-[var(--ink-secondary)]">یافته: </strong>
+                          <strong className="text-[var(--ink-secondary)]">
+                            {t("prototypingLab.outcomeLabel")}:{" "}
+                          </strong>
                           {proto.outcome}
                         </p>
                       )}
                       {proto.referralContact && (
                         <p className="text-[var(--path-1)] font-mono text-[10px]">
-                          معرفی: {proto.referralContact}
+                          {t("prototypingLab.referralLabel")}: {proto.referralContact}
                         </p>
                       )}
                       {proto.nextStepVerdict && (
-                        <div className="flex items-center gap-1 font-mono text-[10px]">
-                          <span className="text-[var(--ink-muted)]">Verdict:</span>
-                          <span className="font-bold text-[var(--signal-positive)]">
-                            [{proto.nextStepVerdict}]
+                        <div className="flex items-center gap-1.5 text-[11px] pt-1">
+                          <span className="text-[var(--ink-secondary)]">
+                            {t("prototypingLab.verdictLabelClean")}:
                           </span>
+                          <Badge
+                            variant={
+                              proto.nextStepVerdict === "PROCEED"
+                                ? "positive"
+                                : proto.nextStepVerdict === "STOP"
+                                  ? "negative"
+                                  : "amber"
+                            }
+                            className="text-[10px] font-sans font-medium"
+                          >
+                            {proto.nextStepVerdict === "PROCEED"
+                              ? t("prototypingLab.verdictProceedClean")
+                              : proto.nextStepVerdict === "ITERATE"
+                                ? t("prototypingLab.verdictIterateClean")
+                                : proto.nextStepVerdict === "PIVOT"
+                                  ? t("prototypingLab.verdictPivotClean")
+                                  : t("prototypingLab.verdictStopClean")}
+                          </Badge>
                         </div>
                       )}
                     </div>
@@ -454,9 +488,7 @@ export function PrototypingLab({
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>{t("prototypingLab.newPrototype")}</DialogTitle>
-            <DialogDescription>
-              طراحی یک آزمون سریع و کم‌هزینه برای پاسخ به سؤالات و فرضیه‌های مسیر
-            </DialogDescription>
+            <DialogDescription>{t("prototypingLab.dialogSubtitle")}</DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleCreateSubmit} className="space-y-4 py-2 text-xs">
@@ -474,10 +506,10 @@ export function PrototypingLab({
               >
                 <div className="flex items-center gap-1.5 font-semibold text-xs mb-1">
                   <MessageCircle className="w-3.5 h-3.5 text-[var(--path-1)]" />
-                  <span>گفت‌وگوی راهنما</span>
+                  <span>{t("prototypingLab.conversationOption")}</span>
                 </div>
                 <p className="text-[10px] text-[var(--ink-muted)]">
-                  مصاحبه داستانی با فردی که هم‌اکنون در این مسیر زندگی می‌کند
+                  {t("prototypingLab.conversationOptionDesc")}
                 </p>
               </button>
 
@@ -493,10 +525,10 @@ export function PrototypingLab({
               >
                 <div className="flex items-center gap-1.5 font-semibold text-xs mb-1">
                   <Zap className="w-3.5 h-3.5 text-[var(--path-2)]" />
-                  <span>آزمون تجربه مستقیم</span>
+                  <span>{t("prototypingLab.experienceOption")}</span>
                 </div>
                 <p className="text-[10px] text-[var(--ink-muted)]">
-                  اجرای یک آزمون ملموس، مایکرو-تریال یا کارگاه چندساعته
+                  {t("prototypingLab.experienceOptionDesc")}
                 </p>
               </button>
             </div>
@@ -570,7 +602,7 @@ export function PrototypingLab({
                     {t("prototypingLab.storyPromptsTitle")}:
                   </span>
                   <ul className="list-disc ps-4 space-y-1 text-[11px] text-[var(--ink-secondary)]">
-                    {DEFAULT_STORY_PROMPTS.map((prompt) => (
+                    {storyPrompts.map((prompt) => (
                       <li key={prompt}>{prompt}</li>
                     ))}
                   </ul>
@@ -619,7 +651,7 @@ export function PrototypingLab({
                 size="sm"
                 onClick={() => setCreateDialogOpen(false)}
               >
-                انصراف
+                {t("common.cancel")}
               </Button>
               <Button type="submit" size="sm" className="gap-1.5">
                 <Plus className="w-3.5 h-3.5" />
@@ -642,9 +674,7 @@ export function PrototypingLab({
                 ? t("prototypingLab.completeConversationAction")
                 : t("prototypingLab.completeExperienceAction")}
             </DialogTitle>
-            <DialogDescription>
-              ثبت یافته‌های حاصل از آزمون میدانی جهت اصلاح یا پیشبرد سناریو
-            </DialogDescription>
+            <DialogDescription>{t("prototypingLab.completionSubtitle")}</DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-2 text-xs">
@@ -655,13 +685,13 @@ export function PrototypingLab({
                     htmlFor="proto-completion-notes"
                     className="font-semibold text-[var(--ink-primary)]"
                   >
-                    یادداشت‌های داستان زیسته و نکات کلیدی
+                    {t("prototypingLab.conversationStoryNotes")}
                   </label>
                   <Textarea
                     id="proto-completion-notes"
                     value={completionNotes}
                     onChange={(e) => setCompletionNotes(e.target.value)}
-                    placeholder="مخاطب درباره واقعیت‌های این حرفه چه گفت؟"
+                    placeholder={t("prototypingLab.conversationStoryPlaceholder")}
                     className="h-24 text-xs"
                   />
                 </div>
@@ -677,7 +707,7 @@ export function PrototypingLab({
                     id="proto-completion-referral"
                     value={completionReferral}
                     onChange={(e) => setCompletionReferral(e.target.value)}
-                    placeholder="نام، نقش یا راه ارتباطی نفر بعدی..."
+                    placeholder={t("prototypingLab.referralPlaceholder")}
                     className="h-8 text-xs"
                   />
                 </div>
@@ -710,22 +740,22 @@ export function PrototypingLab({
                       [
                         {
                           id: "PROCEED",
-                          label: t("prototypingLab.verdictProceed"),
+                          label: t("prototypingLab.verdictProceedClean"),
                           color: "text-[var(--signal-positive)]",
                         },
                         {
                           id: "ITERATE",
-                          label: t("prototypingLab.verdictIterate"),
+                          label: t("prototypingLab.verdictIterateClean"),
                           color: "text-[var(--path-1)]",
                         },
                         {
                           id: "PIVOT",
-                          label: t("prototypingLab.verdictPivot"),
+                          label: t("prototypingLab.verdictPivotClean"),
                           color: "text-[var(--signal-amber)]",
                         },
                         {
                           id: "STOP",
-                          label: t("prototypingLab.verdictStop"),
+                          label: t("prototypingLab.verdictStopClean"),
                           color: "text-[var(--ink-muted)]",
                         },
                       ] as const
@@ -741,7 +771,7 @@ export function PrototypingLab({
                             : "border-[var(--border-subtle)] text-[var(--ink-secondary)]",
                         )}
                       >
-                        <span className={v.color}>[{v.id}]</span> {v.label}
+                        <span className={cn("font-medium", v.color)}>{v.label}</span>
                       </button>
                     ))}
                   </div>
@@ -752,11 +782,11 @@ export function PrototypingLab({
 
           <DialogFooter className="flex justify-between items-center pt-3">
             <Button variant="ghost" size="sm" onClick={() => setCompletingProto(null)}>
-              بستن
+              {t("common.close")}
             </Button>
             <Button size="sm" onClick={handleCompleteSubmit} className="gap-1.5">
               <Check className="w-3.5 h-3.5" />
-              <span>ثبت نتیجه و بستن</span>
+              <span>{t("prototypingLab.saveResultAndClose")}</span>
             </Button>
           </DialogFooter>
         </DialogContent>

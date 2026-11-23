@@ -56,7 +56,7 @@ export function ContextualNudge({
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2">
           <Sparkles className="w-3.5 h-3.5 text-[var(--ink-secondary)] shrink-0" />
-          <Badge variant={mindsetVariants[mindset]}>[{mindsetName}]</Badge>
+          <Badge variant={mindsetVariants[mindset]}>{mindsetName}</Badge>
           <span className="font-semibold text-[var(--ink-primary)]">{title}</span>
         </div>
         <button

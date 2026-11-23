@@ -14,6 +14,7 @@ export interface MindsetBadgeProps {
   name: string;
   description: string;
   className?: string;
+  brackets?: boolean;
 }
 
 export function MindsetBadge({
@@ -21,6 +22,7 @@ export function MindsetBadge({
   name,
   description,
   className,
+  brackets = false,
 }: MindsetBadgeProps): React.JSX.Element {
   const variantMap: Record<MindsetType, "neutral" | "positive" | "negative" | "amber" | "outline"> =
     {
@@ -35,7 +37,7 @@ export function MindsetBadge({
     <CompactTooltip content={description}>
       <span className="inline-block cursor-help">
         <Badge variant={variantMap[type]} className={className}>
-          [{name}]
+          {brackets ? `[${name}]` : name}
         </Badge>
       </span>
     </CompactTooltip>

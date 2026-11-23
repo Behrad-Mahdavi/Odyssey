@@ -20,6 +20,7 @@ export interface GravityBoardProps {
   onDeleteProblem?: (id: string) => void;
   t: (key: string, options?: Record<string, unknown>) => string;
   className?: string;
+  hideHeader?: boolean;
 }
 
 export function GravityBoard({
@@ -29,6 +30,7 @@ export function GravityBoard({
   onDeleteProblem,
   t,
   className,
+  hideHeader = false,
 }: GravityBoardProps): React.JSX.Element {
   const [newContent, setNewContent] = useState("");
 
@@ -44,15 +46,14 @@ export function GravityBoard({
 
   return (
     <Card className={cn("space-y-4", className)}>
-      <CardHeader>
-        <div className="flex items-center justify-between">
+      {!hideHeader && (
+        <CardHeader>
           <CardTitle className="text-sm font-semibold">{t("hwpl.gravityBoardTitle")}</CardTitle>
-          <span className="text-[11px] font-mono text-[var(--ink-muted)]">Ch. 01 & 04</span>
-        </div>
-        <p className="text-xs text-[var(--ink-secondary)] mt-1">{t("hwpl.gravityBoardDesc")}</p>
-      </CardHeader>
+          <p className="text-xs text-[var(--ink-secondary)] mt-1">{t("hwpl.gravityBoardDesc")}</p>
+        </CardHeader>
+      )}
 
-      <CardContent className="space-y-4">
+      <CardContent className={cn("space-y-4", hideHeader && "pt-6")}>
         {/* Add Problem Input */}
         <form onSubmit={handleAdd} className="flex gap-2">
           <Input
@@ -95,7 +96,7 @@ export function GravityBoard({
                     {p.content}
                   </p>
                   <div className="flex items-center justify-between pt-1 border-t border-[var(--border-subtle)]/60 text-[11px]">
-                    <Badge variant="positive">[{t("hwpl.designableBadge")}]</Badge>
+                    <Badge variant="positive">{t("hwpl.designableBadge")}</Badge>
                     <div className="flex items-center gap-1">
                       <Button
                         variant="ghost"
@@ -148,7 +149,7 @@ export function GravityBoard({
                     {p.content}
                   </p>
                   <div className="flex items-center justify-between pt-1 border-t border-[var(--border-subtle)]/60 text-[11px]">
-                    <Badge variant="neutral">[{t("hwpl.gravityBadge")}]</Badge>
+                    <Badge variant="neutral">{t("hwpl.gravityBadge")}</Badge>
                     <div className="flex items-center gap-1">
                       <Button
                         variant="ghost"

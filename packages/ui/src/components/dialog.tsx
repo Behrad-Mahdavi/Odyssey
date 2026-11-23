@@ -15,7 +15,7 @@ export const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      "fixed inset-0 z-50 bg-black/40 backdrop-blur-xs transition-opacity duration-150 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-40 bg-[rgba(10,12,16,0.46)] transition-opacity duration-[var(--dur-panel)] ease-[var(--ease-standard)]",
       className,
     )}
     {...props}
@@ -23,6 +23,11 @@ export const DialogOverlay = React.forwardRef<
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
+/**
+ * Atelier Dialog.
+ * Horizontal centring is done with logical insets + auto margins, never with
+ * `translate-x`, so RTL and LTR stay pixel-identical.
+ */
 export const DialogContent = React.forwardRef<
   HTMLDivElement,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
@@ -32,18 +37,21 @@ export const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed start-[50%] top-[50%] z-50 translate-x-[-50%] translate-y-[-50%] w-full max-w-lg p-6",
+        "fixed inset-x-0 mx-auto top-1/2 -translate-y-1/2 z-50",
+        "w-[calc(100%-2rem)] max-w-lg max-h-[85vh] overflow-y-auto p-6",
         "bg-[var(--bg-surface)] text-[var(--ink-primary)]",
-        "border border-[var(--border-subtle)] rounded-[var(--radius-md,6px)] shadow-sm",
-        "duration-150 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+        "border border-[var(--border-subtle)] rounded-[var(--radius-md)] shadow-[var(--shadow-pop)]",
+        "focus:outline-none",
         className,
       )}
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute end-4 top-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:outline-none">
+      <DialogPrimitive.Close
+        className="absolute end-4 top-4 p-1 rounded-[var(--radius-xs)] text-[var(--ink-muted)] transition-colors duration-[var(--dur-micro)] hover:bg-[var(--bg-subtle)] hover:text-[var(--ink-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
+        aria-label="Close"
+      >
         <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>
@@ -51,7 +59,7 @@ export const DialogContent = React.forwardRef<
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 export const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex flex-col space-y-1.5 text-start mb-4", className)} {...props} />
+  <div className={cn("flex flex-col gap-1.5 text-start mb-5 pe-8", className)} {...props} />
 );
 DialogHeader.displayName = "DialogHeader";
 
@@ -61,7 +69,11 @@ export const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn("text-base font-semibold leading-none tracking-tight", className)}
+    className={cn(
+      "text-[var(--text-h2)] font-semibold leading-[var(--lh-heading)]",
+      "tracking-[var(--tracking-display)]",
+      className,
+    )}
     {...props}
   />
 ));
@@ -73,7 +85,7 @@ export const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn("text-xs text-[var(--ink-secondary)] mt-1.5", className)}
+    className={cn("text-[var(--text-ui)] text-[var(--ink-secondary)]", className)}
     {...props}
   />
 ));
@@ -82,7 +94,7 @@ DialogDescription.displayName = DialogPrimitive.Description.displayName;
 export const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col-reverse sm:flex-row sm:justify-end sm:gap-2 pt-4 border-t border-[var(--border-subtle)]",
+      "flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-5 mt-1 border-t border-[var(--border-subtle)]",
       className,
     )}
     {...props}

@@ -1,6 +1,7 @@
 // Tokens
 export * from "./tokens/colors.js";
 export * from "./tokens/typography.js";
+export * from "./tokens/space.js";
 export * from "./utils/logical-css.js";
 export * from "./utils/cn.js";
 
@@ -22,6 +23,7 @@ export * from "./components/good-time-journal.js";
 export * from "./components/odyssey-plans-studio.js";
 export * from "./components/prototyping-lab.js";
 export * from "./components/data-portability-modal.js";
+export * from "./components/compact-mindset-chip.js";
 
 // Providers
 export * from "./providers/theme-provider.js";

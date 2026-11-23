@@ -8,7 +8,9 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./styles/fonts.css": "./src/styles/fonts.css",
+    "./styles/tokens.css": "./src/styles/tokens.css"
   },
   "scripts": {
     "build": "tsc -b",

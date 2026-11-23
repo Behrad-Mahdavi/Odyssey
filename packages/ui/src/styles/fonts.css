@@ -1,0 +1,13 @@
+/*
+ * Odyssey — Estedad Variable (self-hosted, zero external font CDN).
+ * Source: Google Fonts specimen (https://fonts.google.com/specimen/Estedad)
+ * Upstream: Estedad v8.5 by Amin Abedi — SIL Open Font License 1.1.
+ * One family covers Persian + Latin, weights 100..900 (variable axis `wght`).
+ */
+@font-face {
+  font-family: "Estedad";
+  src: url("../fonts/estedad-variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

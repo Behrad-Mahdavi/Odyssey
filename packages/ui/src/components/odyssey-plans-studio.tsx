@@ -66,6 +66,7 @@ export interface OdysseyPlansStudioProps {
   countWords?: (text: string) => number;
   t: (key: string, options?: Record<string, unknown>) => string;
   className?: string;
+  hideHeader?: boolean;
 }
 
 function defaultCountWords(text: string): number {
@@ -85,6 +86,7 @@ export function OdysseyPlansStudio({
   countWords = defaultCountWords,
   t,
   className,
+  hideHeader = true,
 }: OdysseyPlansStudioProps): React.JSX.Element {
   const [pitchMode, setPitchMode] = useState(false);
   const [activeFeedbackSlot, setActiveFeedbackSlot] = useState<OdysseySlot | null>(null);
@@ -100,25 +102,34 @@ export function OdysseyPlansStudio({
 
   const slotMetadata: Record<
     OdysseySlot,
-    { titleKey: string; subtitleKey: string; color: string; badge: string }
+    {
+      titleKey: string;
+      subtitleKey: string;
+      color: string;
+      badgeKey: string;
+      editorialNumKey: string;
+    }
   > = {
     LIFE_1: {
       titleKey: "odysseyPlans.life1Title",
       subtitleKey: "odysseyPlans.life1Subtitle",
       color: "var(--path-1)",
-      badge: "Life 01",
+      badgeKey: "odysseyPlans.life1Badge",
+      editorialNumKey: "odysseyPlans.editorialNum1",
     },
     LIFE_2: {
       titleKey: "odysseyPlans.life2Title",
       subtitleKey: "odysseyPlans.life2Subtitle",
       color: "var(--path-2)",
-      badge: "Life 02",
+      badgeKey: "odysseyPlans.life2Badge",
+      editorialNumKey: "odysseyPlans.editorialNum2",
     },
     LIFE_3: {
       titleKey: "odysseyPlans.life3Title",
       subtitleKey: "odysseyPlans.life3Subtitle",
       color: "var(--path-3)",
-      badge: "Life 03",
+      badgeKey: "odysseyPlans.life3Badge",
+      editorialNumKey: "odysseyPlans.editorialNum3",
     },
   };
 
@@ -188,15 +199,22 @@ export function OdysseyPlansStudio({
   return (
     <div className={cn("space-y-6", className)}>
       {/* Action Header: Mode Switcher & Print trigger */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 print:hidden">
-        <div>
-          <h3 className="text-base font-semibold text-[var(--ink-primary)]">
-            {t("nav.odysseyPlans")}
-          </h3>
-          <p className="text-xs text-[var(--ink-secondary)]">
-            سه مسیر پنج‌ساله موازی و مستقل — کشف گزینه‌ها بدون مقایسه قضاوت‌گرانه
-          </p>
-        </div>
+      <div
+        className={cn(
+          "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 print:hidden",
+          hideHeader && "sm:justify-end",
+        )}
+      >
+        {!hideHeader && (
+          <div>
+            <h3 className="text-base font-semibold text-[var(--ink-primary)]">
+              {t("nav.odysseyPlans")}
+            </h3>
+            <p className="text-xs text-[var(--ink-secondary)]">
+              {t("odysseyPlans.studioSubtitle")}
+            </p>
+          </div>
+        )}
 
         <div className="flex items-center gap-2">
           <Button
@@ -246,22 +264,27 @@ export function OdysseyPlansStudio({
             >
               {/* Plan Header */}
               <CardHeader className="pb-3 border-b border-[var(--border-subtle)]">
-                <div className="flex items-center justify-between mb-1">
-                  <Badge
-                    variant="outline"
-                    className="font-mono text-[10px] px-2 py-0.5"
-                    style={{ color: meta.color }}
-                  >
-                    {meta.badge}
-                  </Badge>
-                  <span className="font-mono text-[10px] text-[var(--ink-muted)]">
-                    5-Year Trajectory
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-xl font-bold tracking-tight text-[var(--ink-primary)]">
+                      {t(meta.editorialNumKey)}
+                    </span>
+                    <Badge
+                      variant="outline"
+                      className="font-medium text-[11px] ps-2 pe-2 py-0.5"
+                      style={{ color: meta.color, borderColor: meta.color }}
+                    >
+                      {t(meta.badgeKey)}
+                    </Badge>
+                  </div>
+                  <span className="text-[11px] font-mono text-[var(--ink-muted)]">
+                    {t("odysseyPlans.fiveYearTrajectory")}
                   </span>
                 </div>
-                <CardTitle className="text-sm font-semibold text-[var(--ink-primary)]">
+                <CardTitle className="text-base font-bold text-[var(--ink-primary)]">
                   {t(meta.titleKey)}
                 </CardTitle>
-                <CardDescription className="text-[11px] leading-relaxed">
+                <CardDescription className="text-xs text-[var(--ink-secondary)] leading-relaxed mt-1">
                   {t(meta.subtitleKey)}
                 </CardDescription>
               </CardHeader>
@@ -380,61 +403,82 @@ export function OdysseyPlansStudio({
                     </div>
                   )}
 
-                  {/* 5-Year Event List */}
-                  <div className="space-y-1.5 border border-[var(--border-subtle)] rounded-[var(--radius-sm,4px)] p-2 bg-[var(--bg-subtle)]/20">
-                    {[1, 2, 3, 4, 5].map((year) => {
-                      const events = plan.timelineEvents.filter((e) => e.year === year);
-                      return (
-                        <div
-                          key={year}
-                          className="flex items-start gap-2 text-[11px] py-1 border-b border-[var(--border-subtle)]/50 last:border-0"
-                        >
-                          <span className="font-mono text-[10px] text-[var(--ink-muted)] shrink-0 w-10">
-                            Y0{year}:
-                          </span>
-                          <div className="flex-1 space-y-1">
-                            {events.length === 0 ? (
-                              <span className="text-[var(--ink-muted)] opacity-60">—</span>
-                            ) : (
-                              events.map((ev, i) => (
-                                <div
-                                  key={`event-${ev.year}-${ev.type}-${i}`}
-                                  className="flex items-center gap-1.5"
-                                >
-                                  <span
-                                    className={cn(
-                                      "w-1.5 h-1.5 rounded-full shrink-0",
-                                      ev.type === "work"
-                                        ? "bg-[var(--path-1)]"
-                                        : "bg-[var(--signal-positive)]",
-                                    )}
-                                  />
-                                  <span className="text-[var(--ink-primary)]">
-                                    {ev.description}
+                  {/* 5-Year Continuous Vertical Spine Timeline */}
+                  <div className="space-y-2 border border-[var(--border-subtle)] rounded-[var(--radius-sm,4px)] p-3 bg-[var(--bg-subtle)]/20">
+                    <div className="relative ps-5 before:absolute before:top-2 before:bottom-2 before:start-2 before:w-0.5 before:bg-[var(--border-subtle)] space-y-3">
+                      {[1, 2, 3, 4, 5].map((year) => {
+                        const events = plan.timelineEvents.filter((e) => e.year === year);
+                        return (
+                          <div key={year} className="relative">
+                            {/* Year Node on Spine */}
+                            <div className="absolute -start-5 top-1 w-2.5 h-2.5 rounded-full border-2 border-[var(--ink-secondary)] bg-[var(--bg-surface)]" />
+
+                            <div className="space-y-1">
+                              <div className="flex items-center justify-between text-[11px]">
+                                <span className="font-semibold text-[var(--ink-primary)]">
+                                  {t("odysseyPlans.year", { num: year })}
+                                </span>
+                              </div>
+
+                              <div className="space-y-1">
+                                {events.length === 0 ? (
+                                  <span className="text-[10px] text-[var(--ink-muted)] block opacity-70">
+                                    {t("odysseyPlans.noEvents")}
                                   </span>
-                                </div>
-                              ))
-                            )}
+                                ) : (
+                                  events.map((ev, i) => (
+                                    <div
+                                      key={`event-${ev.year}-${ev.type}-${i}`}
+                                      className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] bg-[var(--bg-surface)] border border-[var(--border-subtle)] me-1.5 mb-1"
+                                    >
+                                      <span
+                                        className={cn(
+                                          "w-1.5 h-1.5 rounded-full shrink-0",
+                                          ev.type === "work"
+                                            ? "bg-[var(--path-1)]"
+                                            : "bg-[var(--signal-positive)]",
+                                        )}
+                                      />
+                                      <span className="text-[var(--ink-primary)] font-medium">
+                                        {ev.description}
+                                      </span>
+                                      <span className="text-[9px] text-[var(--ink-muted)] font-mono">
+                                        (
+                                        {ev.type === "work"
+                                          ? t("odysseyPlans.workEvent")
+                                          : t("odysseyPlans.personalEvent")}
+                                        )
+                                      </span>
+                                    </div>
+                                  ))
+                                )}
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
 
                 {/* 3. Four Calibrated Gauges (INV-01) */}
-                <div className="space-y-2 p-3 rounded-[var(--radius-sm,4px)] bg-[var(--bg-subtle)]/30 border border-[var(--border-subtle)]">
-                  <span className="text-[11px] font-semibold text-[var(--ink-primary)] block">
-                    سنجش چهارگانه فرضیه‌ها (Gauges)
+                <div className="space-y-2.5 p-3 rounded-[var(--radius-sm,4px)] bg-[var(--bg-subtle)]/30 border border-[var(--border-subtle)]">
+                  <span className="text-xs font-semibold text-[var(--ink-primary)] block">
+                    سنجش چهارگانه فرضیه‌ها
                   </span>
                   <div className="space-y-2">
                     {/* Resources */}
-                    <div>
-                      <div className="flex justify-between text-[11px] mb-0.5">
-                        <span className="text-[var(--ink-secondary)]">
-                          {t("odysseyPlans.resources")}
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-[var(--ink-secondary)] font-medium">
+                          {t("odysseyPlans.resourcesLabel")}
                         </span>
-                        <span className="font-mono font-semibold">%{plan.resources}</span>
+                        <span
+                          dir="ltr"
+                          className="font-mono tabular-nums font-semibold text-[var(--ink-primary)]"
+                        >
+                          {plan.resources}%
+                        </span>
                       </div>
                       {!pitchMode ? (
                         <input
@@ -445,12 +489,12 @@ export function OdysseyPlansStudio({
                           onChange={(e) =>
                             handleGaugeChange(slot, "resources", Number(e.target.value))
                           }
-                          className="w-full accent-[var(--path-1)] cursor-pointer"
+                          className="w-full accent-[var(--path-1)] cursor-pointer h-2"
                         />
                       ) : (
-                        <div className="w-full h-1.5 bg-[var(--border-subtle)] rounded-full overflow-hidden">
+                        <div className="w-full h-2 bg-[var(--border-subtle)] rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-[var(--path-1)]"
+                            className="h-full bg-[var(--path-1)] transition-all"
                             style={{ width: `${plan.resources}%` }}
                           />
                         </div>
@@ -458,12 +502,17 @@ export function OdysseyPlansStudio({
                     </div>
 
                     {/* Likability */}
-                    <div>
-                      <div className="flex justify-between text-[11px] mb-0.5">
-                        <span className="text-[var(--ink-secondary)]">
-                          {t("odysseyPlans.likability")}
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-[var(--ink-secondary)] font-medium">
+                          {t("odysseyPlans.likabilityLabel")}
                         </span>
-                        <span className="font-mono font-semibold">%{plan.likability}</span>
+                        <span
+                          dir="ltr"
+                          className="font-mono tabular-nums font-semibold text-[var(--ink-primary)]"
+                        >
+                          {plan.likability}%
+                        </span>
                       </div>
                       {!pitchMode ? (
                         <input
@@ -474,12 +523,12 @@ export function OdysseyPlansStudio({
                           onChange={(e) =>
                             handleGaugeChange(slot, "likability", Number(e.target.value))
                           }
-                          className="w-full accent-[var(--signal-amber)] cursor-pointer"
+                          className="w-full accent-[var(--signal-amber)] cursor-pointer h-2"
                         />
                       ) : (
-                        <div className="w-full h-1.5 bg-[var(--border-subtle)] rounded-full overflow-hidden">
+                        <div className="w-full h-2 bg-[var(--border-subtle)] rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-[var(--signal-amber)]"
+                            className="h-full bg-[var(--signal-amber)] transition-all"
                             style={{ width: `${plan.likability}%` }}
                           />
                         </div>
@@ -487,12 +536,17 @@ export function OdysseyPlansStudio({
                     </div>
 
                     {/* Confidence */}
-                    <div>
-                      <div className="flex justify-between text-[11px] mb-0.5">
-                        <span className="text-[var(--ink-secondary)]">
-                          {t("odysseyPlans.confidence")}
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-[var(--ink-secondary)] font-medium">
+                          {t("odysseyPlans.confidenceLabel")}
                         </span>
-                        <span className="font-mono font-semibold">%{plan.confidence}</span>
+                        <span
+                          dir="ltr"
+                          className="font-mono tabular-nums font-semibold text-[var(--ink-primary)]"
+                        >
+                          {plan.confidence}%
+                        </span>
                       </div>
                       {!pitchMode ? (
                         <input
@@ -503,12 +557,12 @@ export function OdysseyPlansStudio({
                           onChange={(e) =>
                             handleGaugeChange(slot, "confidence", Number(e.target.value))
                           }
-                          className="w-full accent-[var(--path-2)] cursor-pointer"
+                          className="w-full accent-[var(--path-2)] cursor-pointer h-2"
                         />
                       ) : (
-                        <div className="w-full h-1.5 bg-[var(--border-subtle)] rounded-full overflow-hidden">
+                        <div className="w-full h-2 bg-[var(--border-subtle)] rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-[var(--path-2)]"
+                            className="h-full bg-[var(--path-2)] transition-all"
                             style={{ width: `${plan.confidence}%` }}
                           />
                         </div>
@@ -516,12 +570,17 @@ export function OdysseyPlansStudio({
                     </div>
 
                     {/* Coherence */}
-                    <div>
-                      <div className="flex justify-between text-[11px] mb-0.5">
-                        <span className="text-[var(--ink-secondary)]">
-                          {t("odysseyPlans.coherence")}
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-[var(--ink-secondary)] font-medium">
+                          {t("odysseyPlans.coherenceLabel")}
                         </span>
-                        <span className="font-mono font-semibold">%{plan.coherence}</span>
+                        <span
+                          dir="ltr"
+                          className="font-mono tabular-nums font-semibold text-[var(--ink-primary)]"
+                        >
+                          {plan.coherence}%
+                        </span>
                       </div>
                       {!pitchMode ? (
                         <input
@@ -532,12 +591,12 @@ export function OdysseyPlansStudio({
                           onChange={(e) =>
                             handleGaugeChange(slot, "coherence", Number(e.target.value))
                           }
-                          className="w-full accent-[var(--path-3)] cursor-pointer"
+                          className="w-full accent-[var(--path-3)] cursor-pointer h-2"
                         />
                       ) : (
-                        <div className="w-full h-1.5 bg-[var(--border-subtle)] rounded-full overflow-hidden">
+                        <div className="w-full h-2 bg-[var(--border-subtle)] rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-[var(--path-3)]"
+                            className="h-full bg-[var(--path-3)] transition-all"
                             style={{ width: `${plan.coherence}%` }}
                           />
                         </div>
@@ -556,8 +615,8 @@ export function OdysseyPlansStudio({
                     {([0, 1, 2] as const).map((qIdx) => (
                       <div key={qIdx} className="space-y-1">
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-mono text-[var(--ink-muted)]">
-                            Q0{qIdx + 1}:
+                          <span className="text-[11px] font-mono text-[var(--ink-muted)]">
+                            {t("odysseyPlans.year", { num: qIdx + 1 }).replace("سال", "سؤال")}
                           </span>
                           {!pitchMode && plan.questions[qIdx]?.trim() && onCreatePrototype && (
                             <button

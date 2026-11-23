@@ -7,3 +7,5 @@ coverage
 *.log
 .playwright
 test-results
+playwright-report
+.pnpm-store

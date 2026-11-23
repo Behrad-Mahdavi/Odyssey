@@ -24,8 +24,8 @@ describe("Odyssey UI Component Suite", () => {
   it("renders Button with primary variant and logical classes", () => {
     const html = renderToStaticMarkup(<Button variant="primary">اقدام</Button>);
     expect(html).toContain("اقدام");
-    expect(html).toContain("ps-4");
-    expect(html).toContain("pe-4");
+    expect(html).toContain("ps-3.5");
+    expect(html).toContain("pe-3.5");
     expect(containsPhysicalCss(html)).toBe(false);
   });
 
@@ -43,7 +43,7 @@ describe("Odyssey UI Component Suite", () => {
         description="پرسشگری دقیق و جستجوی امکانات تازه"
       />,
     );
-    expect(html).toContain("[کنجکاوی]");
+    expect(html).toContain("کنجکاوی");
     expect(containsPhysicalCss(html)).toBe(false);
   });
 
@@ -80,7 +80,7 @@ describe("Odyssey UI Component Suite", () => {
         prompt="یک آزمون کوچک ۵ دقیقه‌ای طراحی کنید."
       />,
     );
-    expect(html).toContain("[گرایش به عمل]");
+    expect(html).toContain("گرایش به عمل");
     expect(html).toContain("آزمودن فرضیه");
     expect(html).toContain("یک آزمون کوچک ۵ دقیقه‌ای طراحی کنید.");
     expect(containsPhysicalCss(html)).toBe(false);

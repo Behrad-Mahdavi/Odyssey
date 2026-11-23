@@ -21,6 +21,7 @@ export interface CompassEditorProps {
   countWords?: (text: string) => number;
   t: (key: string, options?: Record<string, unknown>) => string;
   className?: string;
+  hideHeader?: boolean;
 }
 
 function defaultCountWords(text: string): number {
@@ -37,6 +38,7 @@ export function CompassEditor({
   countWords = defaultCountWords,
   t,
   className,
+  hideHeader = true,
 }: CompassEditorProps): React.JSX.Element {
   const [data, setData] = useState<CompassData>({
     workview: initialData?.workview ?? "",
@@ -60,18 +62,17 @@ export function CompassEditor({
 
   return (
     <Card className={cn("space-y-6", className)}>
-      <CardHeader>
-        <div className="flex items-center justify-between">
+      {!hideHeader && (
+        <CardHeader>
           <div className="flex items-center gap-2">
             <Compass className="w-4 h-4 text-[var(--signal-amber)]" />
             <CardTitle className="text-sm font-semibold">{t("compass.title")}</CardTitle>
           </div>
-          <span className="text-xs font-mono text-[var(--ink-muted)]">Ch. 02</span>
-        </div>
-        <CardDescription className="text-xs">{t("compass.desc")}</CardDescription>
-      </CardHeader>
+          <CardDescription className="text-xs">{t("compass.desc")}</CardDescription>
+        </CardHeader>
+      )}
 
-      <CardContent className="space-y-6">
+      <CardContent className={cn("space-y-6", hideHeader && "pt-6")}>
         {/* Dual Views: Workview and Lifeview */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Workview Column */}
@@ -152,7 +153,7 @@ export function CompassEditor({
             {/* Complement */}
             <div className="space-y-1.5">
               <div className="flex items-center gap-1">
-                <Badge variant="positive">[{t("compass.complementLabel")}]</Badge>
+                <Badge variant="positive">{t("compass.complementLabel")}</Badge>
               </div>
               <Textarea
                 value={data.coherenceComplement}
@@ -167,7 +168,7 @@ export function CompassEditor({
             {/* Conflict */}
             <div className="space-y-1.5">
               <div className="flex items-center gap-1">
-                <Badge variant="negative">[{t("compass.conflictLabel")}]</Badge>
+                <Badge variant="negative">{t("compass.conflictLabel")}</Badge>
               </div>
               <Textarea
                 value={data.coherenceConflict}
@@ -182,7 +183,7 @@ export function CompassEditor({
             {/* Guide */}
             <div className="space-y-1.5">
               <div className="flex items-center gap-1">
-                <Badge variant="outline">[{t("compass.guideLabel")}]</Badge>
+                <Badge variant="outline">{t("compass.guideLabel")}</Badge>
               </div>
               <Textarea
                 value={data.coherenceGuide}

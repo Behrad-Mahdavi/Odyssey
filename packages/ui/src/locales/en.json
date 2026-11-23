@@ -32,7 +32,15 @@
     "failureLog": "Failure Immunity",
     "portability": "Backup & Export",
     "lockVault": "Lock Vault",
-    "settings": "Studio Settings"
+    "settings": "Studio Settings",
+    "overview": "Studio Overview",
+    "checkIn": "1. HWPL & Gravity",
+    "collapseSidebar": "Collapse Sidebar",
+    "expandSidebar": "Expand Sidebar",
+    "currentCycle": "Cycle 1",
+    "vaultStatus": "Vault Status",
+    "loadSample": "Load Sample Data",
+    "clearWorkspace": "Clear Workspace"
   },
   "theme": {
     "light": "Archival Paper (Light)",
@@ -170,7 +178,17 @@
     "presenterEnergyPlaceholder": "What energy, hesitation, or resonance did you notice while presenting?",
     "saveFeedback": "Save Presentation Feedback",
     "openFeedback": "Log Feedback",
-    "savePlan": "Save Odyssey Plan"
+    "savePlan": "Save Odyssey Plan",
+    "fiveYearTrajectory": "5-Year Trajectory",
+    "life1Badge": "Path 01",
+    "life2Badge": "Path 02",
+    "life3Badge": "Path 03",
+    "resourcesLabel": "Resources",
+    "likabilityLabel": "Likability",
+    "confidenceLabel": "Confidence",
+    "coherenceLabel": "Coherence",
+    "addYearEvent": "Add Year {{year}} Event",
+    "noEvents": "No events recorded"
   },
   "goodTimeJournal": {
     "activityLabel": "Daily Activity",
@@ -188,9 +206,9 @@
     "addActivity": "Quick Log Activity",
     "duration": "Duration (minutes)",
     "noActivities": "No activities logged yet.",
-    "stage1": "Stage 1: Daily Log",
-    "stage2": "Stage 2: Weekly Matrix & Reflection",
-    "stage3": "Stage 3: AEIOU Deep Dive",
+    "stage1": "1. Daily Log",
+    "stage2": "2. Review & Energy Matrix",
+    "stage3": "3. AEIOU Analysis",
     "matrixTitle": "2D Energy & Engagement Matrix",
     "matrixDesc": "Identify peak energy drivers and energy blackholes",
     "tagTrend": "Trend",
@@ -207,7 +225,18 @@
     "highEnergyLowEngage": "Agitated Busywork",
     "lowEnergyHighEngage": "Exhausting Focus",
     "deleteActivity": "Delete Activity",
-    "flowBadge": "Flow"
+    "flowBadge": "Flow",
+    "drainLabel": "Drain",
+    "fuelLabel": "Fuel",
+    "neutralLabel": "Neutral",
+    "boredLabel": "Bored",
+    "engagedLabel": "Engaged",
+    "immersedLabel": "Immersed",
+    "stepper1": "1. Daily Log",
+    "stepper2": "2. Review & Energy Matrix",
+    "stepper3": "3. AEIOU Analysis",
+    "energyScore": "Energy",
+    "engagementScore": "Engagement"
   },
   "prototypingLab": {
     "title": "Prototyping Lab",
@@ -247,7 +276,15 @@
     "outcomeLabel": "Real Findings & Outcome",
     "outcomePlaceholder": "What data was gathered and how was your assumption answered?",
     "linkedToPlan": "Linked to {{slot}} · Q{{num}}",
-    "deletePrototype": "Delete Prototype"
+    "deletePrototype": "Delete Prototype",
+    "verdictProceedClean": "Proceed",
+    "verdictIterateClean": "Iterate",
+    "verdictPivotClean": "Pivot",
+    "verdictStopClean": "Stop",
+    "verdictLabelClean": "Next Step Verdict",
+    "logFindingsTitle": "Log Findings & Verdict",
+    "notesLabel": "Conversation or Test Notes",
+    "referralContactLabel": "Referral Contacts"
   },
   "portability": {
     "title": "Data Portability & Backup Studio",
@@ -308,5 +345,41 @@
     "compassAwarenessPrompt": "What is work to you? What core values anchor your life? Notice where they align and where tensions emerge.",
     "odysseyBiasTitle": "Bias to Action Across Horizons",
     "odysseyBiasPrompt": "Instead of debating plan perfection, formulate a question testable through a 20-minute conversation or rapid prototype."
+  },
+  "prototyping": {
+    "title": "Prototyping Lab",
+    "desc": "Test odyssey hypotheses through story conversations and rapid prototype experiences"
+  },
+  "overview": {
+    "title": "Studio Overview",
+    "subtitle": "Life architecture drafting table and cycle monitoring",
+    "hwplSummary": "Life Dashboard Balance (HWPL)",
+    "journalSummary": "Journal Logs This Week",
+    "odysseySummary": "Three Odyssey Plans",
+    "prototypeSummary": "Active Prototypes",
+    "recommendedStep": "Recommended Next Step",
+    "emptyWorkspaceNotice": "Workspace is in a clean, empty state.",
+    "loadSampleCta": "Load Sample Workspace",
+    "loadSampleDesc": "Click to populate the studio with comprehensive sample data.",
+    "activeCycles": "Active Cycles",
+    "noEntriesYet": "No entries recorded yet",
+    "hwplEmpty": "No HWPL assessment recorded yet",
+    "journalEmpty": "No activities logged in journal yet",
+    "odysseyEmpty": "No odyssey plans crafted yet",
+    "prototypeEmpty": "No prototypes designed yet",
+    "startHwpl": "Start Current State Assessment",
+    "startCompass": "Write Views in Compass",
+    "startJournal": "Log First Activity in Journal",
+    "startOdyssey": "Draft First Odyssey Path",
+    "startPrototype": "Design First Prototype"
+  },
+  "mindsetChips": {
+    "guideTitle": "Five Life Design Mindsets Guide",
+    "chipButton": "5 Design Mindsets",
+    "curiosityTip": "Curiosity: Non-judgmental exploration of current evidence",
+    "actionTip": "Bias to Action: Building cheap small tests in the real world",
+    "reframingTip": "Reframing: Separating immutable gravity from designable challenges",
+    "awarenessTip": "Awareness: Mindful observation of patterns, releasing first ideas",
+    "collaborationTip": "Radical Collaboration: Inquisitive dialogue and co-design with others"
   }
 }
